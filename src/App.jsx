@@ -10,6 +10,9 @@ import Cart from "./pages/Cart";
 import Asks from "./pages/Asks";
 import AsksWrite from "./pages/AsksWrite";
 import MyPage from "./pages/MyPage";
+import FashionFeed from "./pages/Social";
+import BestProducts from "./pages/Best";
+import RankingPage from "./pages/Ranking";
 
 
 function App() {
@@ -27,6 +30,9 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/asks" element={<Asks />} />
+        <Route path="/bestProducts" element={<BestProducts />} />
+        <Route path="/ranking" element={<RankingPage />} />
+        <Route path="/fashionFeed" element={<FashionFeed/>}/>
         <Route path="/asks/write" element={<AsksWrite />} />
       </Routes>
     </>
