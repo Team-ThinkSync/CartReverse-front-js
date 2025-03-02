@@ -3,6 +3,8 @@ import { Card, CardContent } from "../components/Card";
 import { Button } from "../components/Button"; 
 import Clothes from "../assets/images/clothes.png";
 import { TrophyIcon, ShoppingBagIcon } from "lucide-react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const categories = ["전체", "신발", "아우터", "상의", "바지"]; 
 
@@ -22,6 +24,7 @@ export default function RankingPage() {
     
   return ( 
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen"> 
+    <Header />
       <h2 className="text-2xl font-bold mb-6 text-center">인기 상품 랭킹</h2>
       
       <div className="bg-white rounded-xl p-4 shadow-sm mb-6">
@@ -85,6 +88,7 @@ export default function RankingPage() {
           <p>해당 카테고리에 상품이 없습니다.</p>
         </div>
       )}
+      <Footer/>
     </div> 
   ); 
 }
