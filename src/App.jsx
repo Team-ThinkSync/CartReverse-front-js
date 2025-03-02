@@ -13,6 +13,7 @@ import MyPage from "./pages/MyPage";
 import FashionFeed from "./pages/Social";
 import BestProducts from "./pages/Best";
 import RankingPage from "./pages/Ranking";
+import ProductDetail from "./pages/ProductDetail";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/productDetail" element={<ProductDetail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/NotFound" element={<NotFound/>}/>
         <Route path="/product/:productId" element={<ProductDetailPage />} />
