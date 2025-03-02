@@ -56,35 +56,35 @@ function LoginForm2() {
     }, [emailValid, pwValid]);
 
     return (
-        <div id="main" className="flex flex-col h-[850px] mx-[400px] my-[100px] ">
-            <h2 id="login__title" className="mt-[100px] mb-[60px] text-2xl font-bold">로그인</h2>
+        <div id="main" className="flex flex-col w-[480px] h-[850px] mx-auto my-[50px] ">
+            <h2 id="login__title" className="mt-[200px] mb-[60px] text-3xl font-bold">로그인</h2>
 
             <form className="flex flex-col" onSubmit={onClickConfirmButton}>
                 <label htmlFor="login-id" className="flex flex-col mb-[7px]">
-                    <span className="text-[rgba(0,0,0,0.7)] mb-[7px]">이메일</span>
+                    <span className="text-[rgba(0,0,0,0.7)] font-semibold text-lg mb-[7px]">이메일</span>
                     <input
-                        id="login-id"
+                        id="register-id"
                         type="text"
                         value={email}
                         onChange={handleEmail}
-                        className="text-2xl border-[rgba(0,0,0,0.7)] mt-[10px] focus:outline-none focus:border-black"
+                        className="text-xl border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"
                     />
                 </label>
 
                 <label htmlFor="login-password" className="flex flex-col mb-[7px]">
-                    <span className="text-[rgba(0,0,0,0.7)] mb-[7px]">비밀번호</span>
+                    <span className="text-[rgba(0,0,0,0.7)] font-semibold text-lg mb-[7px]">비밀번호</span>
                     <input
                         id="login-password"
                         type="password"
                         value={pw}
                         onChange={handlePw}
-                        className="text-2xl border-[rgba(0,0,0,0.7)] mt-[10px] focus:outline-none focus:border-black"
+                        className="text-xl border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"
                     />
                 </label>
 
                 <div className="flex justify-between mb-[60px]">
-                    <Link to={"/register"} className="text-[rgba(0,0,0,0.7)] text-sm no-underline">회원가입</Link>
-                    <a className="text-[rgba(0,0,0,0.7)] text-sm no-underline" href="#">아이디 / 비밀번호 찾기</a>
+                    <Link to={"/register"} className="text-[rgba(0,0,0,0.7)] text-sm no-underline font-semibold">회원가입</Link>
+                    <a className="text-[rgba(0,0,0,0.7)] text-sm no-underline font-semibold" href="#">아이디 / 비밀번호 찾기</a>
                 </div>
 
                 <input

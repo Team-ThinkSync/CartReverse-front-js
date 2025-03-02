@@ -12,6 +12,10 @@ import Asks from "./pages/Asks";
 import AsksWrite from "./pages/AsksWrite";
 import MyPage from "./pages/MyPage";
 import KakaoRedirect from "./pages/KakaoRedirect";
+import Admin from "./pages/Admin";
+import Dashboard from "./components/admin/Dashboard";
+import UserManagement from "./components/admin/UserManagement";
+import ProductManagement from "./components/admin/ProductManagement";
 
 
 function App() {
@@ -32,6 +36,13 @@ function App() {
         <Route path="/asks" element={<Asks />} />
         <Route path="/asks/write" element={<AsksWrite />} />
         <Route path="/kakao" element={<KakaoRedirect />} />
+
+      {/* 관리자 페이지 */}
+        <Route path="/admin" element={<Admin />}>
+          <Route path="dashboard" element={<Dashboard/>} />
+          <Route path="users" element={<UserManagement/>} />
+          <Route path="products" element={<ProductManagement/>} />
+        </Route>
       </Routes>
     </>
   )

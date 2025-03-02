@@ -34,27 +34,31 @@ function SideBar({ isSidebarOpen, setIsSidebarOpen }) {
             <span className="material-icons">close</span>
           </button>
         </div>
-        <ul className="p-10 space-y-8">
-          <div className="p-20 border-solid border-4 border-gray-200 m-auto w-60 h-60 bg-gray-200 rounded-3xl">
 
-          </div>
-          <li className="cursor-pointer hover:text-gray-600  text-center">
-            <div className="font-bold text-2xl">닉네임</div>
-            <div className="font-semibold text-lg mt-2">Gold</div>
-          </li>
-          <li className="cursor-pointer hover:text-gray-600">
-            <div>주문배송조회</div>
-          </li>
-          <li className="cursor-pointer hover:text-gray-600">
-            <div>취소/교환/반품 내역</div>
-          </li>
-          <li className="cursor-pointer hover:text-gray-600">
-            <div>회원정보수정</div>
-          </li>
-          <li className="cursor-pointer hover:text-gray-600">
-            <div>쿠폰</div>
-          </li>
-        </ul>
+        {
+         isLoggedIn && (
+          <ul className="p-10 space-y-8">
+            <div className="p-20 border-solid border-4 border-gray-200 m-auto w-60 h-60 bg-gray-200 rounded-3xl">
+            </div>
+
+            <li className="cursor-pointer hover:text-gray-600  text-center">
+              <div className="font-bold text-2xl">{currentUser.nickname}</div>
+              <div className="font-semibold text-lg mt-2">{currentUser.rank}</div>
+            </li>
+            <li className="cursor-pointer hover:text-gray-600">
+              <span>주문배송조회</span>
+            </li>
+            <li className="cursor-pointer hover:text-gray-600">
+              <div>취소/교환/반품 내역</div>
+            </li>
+            <li className="cursor-pointer hover:text-gray-600">
+              <div>회원정보수정</div>
+            </li>
+            <li className="cursor-pointer hover:text-gray-600">
+              <div>쿠폰</div>
+            </li>
+          </ul>)
+        }
       </div>
 
       {/* 배경 클릭 시 닫힘 */}

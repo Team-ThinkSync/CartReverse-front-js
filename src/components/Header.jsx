@@ -78,7 +78,7 @@ function Header() {
       </div>
       
     {/* Header-middle */}
-    <div id="header-middle" className="flex bg-white justify-between py-5 items-center text-[#708090]">
+    <div id="header-middle" className="flex bg-white justify-between py-5 items-center text-[#708090] border-b-gray-200 border">
       <div id="nav" className="flex items-center">
         <button onClick={() => setIsSidebarOpen(true)} className="ml-5 bg-transparent w-10 h-10 m-auto "><svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="#708090"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
         </button>
@@ -106,7 +106,7 @@ function Header() {
     </div>
       
     {/* Header-bottom */}
-    <div id="header-bottom" className="bg-white pt-2 bottom-1">
+    <div id="header-bottom" className="bg-white pt-2 bottom-1 ">
       <ul className="flex list-none gap-14 pl-12 py-3">
         <li className="font-libre text-3xl cursor-pointer  font-semibold w-1/5">Best</li>
         <li className="relative group font-libre text-3xl cursor-pointer font-semibold hover:underline hover:underline-offset-4 w-1/5">
