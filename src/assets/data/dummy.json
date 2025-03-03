@@ -1,11 +1,17 @@
 [
     {
         "email": "abc@naver.com",
-
-        "password": "study9999!"
+        "password": "study9999!",
+        "name" : "홍길동",
+        "nickname" : "고길동",
+        "grade" : "Gold"
     },
     {
         "email": "def@naver.com",
-        "password": "hard9999!"
+        "password": "hard9999!",
+        "name" : "김영수",
+        "nickname" : "둘리",
+        "grade" : "Bronze"
+
     }
 ]

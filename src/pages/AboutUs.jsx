@@ -1,17 +1,16 @@
-import Header from "../components/Header";
-import Main from "../components/Main";
-import Footer from "../components/Footer";
-import ImageSlider from "../components/ImageSlider";
 
-const Home = () => {
+import Header from "../components/Header";
+import AboutUsContent from "../components/AboutUs";
+import Footer from "../components/Footer";
+
+const AboutUs = () => {
   return (
     <div id="wrap" className="mx-auto w-full h-[1400px] ">
       <Header />
-      <ImageSlider />
-      <Main />
+      <AboutUsContent />
       <Footer />
     </div>
   )
 }
 
-export default Home;
+export default AboutUs;
