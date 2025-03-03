@@ -108,7 +108,7 @@ function Header() {
     {/* Header-bottom */}
     <div id="header-bottom" className="bg-white pt-2 bottom-1 ">
       <ul className="flex list-none gap-14 pl-12 py-3">
-        <li className="font-libre text-3xl cursor-pointer  font-semibold w-1/5">Best</li>
+        <li className="font-libre text-3xl cursor-pointer  font-semibold w-1/5" onClick={() => Navigate("/bestProducts")}>Best</li>
         <li className="relative group font-libre text-3xl cursor-pointer font-semibold hover:underline hover:underline-offset-4 w-1/5">
           Women
           {/* 서브 메뉴 */}
@@ -143,15 +143,14 @@ function Header() {
           </ul>
         </li>
         
-        <li className="font-libre text-3xl cursor-pointer font-semibold hover:underline hover:underline-offset-4">Ranking</li>        
+        <li className="font-libre text-3xl cursor-pointer font-semibold hover:underline hover:underline-offset-4" onClick={() => Navigate("/ranking")}>Ranking</li>        
         <li className="font-libre text-3xl text-gray-200 w-20">|</li>
 
-        <li className="font-libre text-3xl text-gray-500 cursor-pointer w-full">Social</li>
+        <li className="font-libre text-3xl text-gray-500 cursor-pointer w-full" onClick={() => Navigate("/fashionFeed")}>Social</li>
+
       </ul>
     </div>
   </div>
-
-    
   );
 }
 
