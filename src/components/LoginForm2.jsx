@@ -1,8 +1,9 @@
-import kakaoLoginImg from "../assets/images/kakao_login_medium_wide.png";
+
 import { useEffect, useState } from 'react';
-import User from "../assets/data/dummy.json"
+import users from "../assets/data/dummy.json"
 import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
+import KakaoLoginButton from "./KakaoLogin";
 
 function LoginForm2() {
 
@@ -16,6 +17,7 @@ function LoginForm2() {
 
     // 이메일 입력 핸들러
     const handleEmail = (e) => {
+        console.log(e);
         const value = e.target.value;
         setEmail(value);
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,11 +35,14 @@ function LoginForm2() {
     // 로그인 버튼 클릭 핸들러
     const onClickConfirmButton = (e) => {
         e.preventDefault();  // 폼의 기본 동작 방지 (페이지 새로고침 방지)
-        const user = User.find((user) => user.email === email && user.password === pw);
 
-        if (user) {
+        const currentUser = users.find((user) => user.email === email && user.password === pw);
+
+
+
+        if (currentUser) {
             alert('로그인에 성공했습니다.');
-            login();
+            login(currentUser);
             // console.log("로그인 성공")
             navigate('/');
         } else {
@@ -51,35 +56,35 @@ function LoginForm2() {
     }, [emailValid, pwValid]);
 
     return (
-        <div id="main" className="flex flex-col h-[850px] mx-[400px] my-[100px]">
-            <h2 id="login__title" className="mt-[100px] mb-[60px] text-2xl font-bold">로그인</h2>
+        <div id="main" className="flex flex-col w-[480px] h-[850px] mx-auto my-[50px] ">
+            <h2 id="login__title" className="mt-[200px] mb-[60px] text-3xl font-bold">로그인</h2>
 
             <form className="flex flex-col" onSubmit={onClickConfirmButton}>
                 <label htmlFor="login-id" className="flex flex-col mb-[7px]">
-                    <span className="text-[rgba(0,0,0,0.7)] mb-[7px]">이메일</span>
+                    <span className="text-[rgba(0,0,0,0.7)] font-semibold text-lg mb-[7px]">이메일</span>
                     <input
-                        id="login-id"
+                        id="register-id"
                         type="text"
                         value={email}
                         onChange={handleEmail}
-                        className="text-2xl border-[rgba(0,0,0,0.7)] mt-[10px] focus:outline-none focus:border-black"
+                        className="text-xl border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"
                     />
                 </label>
 
                 <label htmlFor="login-password" className="flex flex-col mb-[7px]">
-                    <span className="text-[rgba(0,0,0,0.7)] mb-[7px]">비밀번호</span>
+                    <span className="text-[rgba(0,0,0,0.7)] font-semibold text-lg mb-[7px]">비밀번호</span>
                     <input
                         id="login-password"
                         type="password"
                         value={pw}
                         onChange={handlePw}
-                        className="text-2xl border-[rgba(0,0,0,0.7)] mt-[10px] focus:outline-none focus:border-black"
+                        className="text-xl border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"
                     />
                 </label>
 
                 <div className="flex justify-between mb-[60px]">
-                    <Link to={"/register"} className="text-[rgba(0,0,0,0.7)] text-sm no-underline">회원가입</Link>
-                    <a className="text-[rgba(0,0,0,0.7)] text-sm no-underline" href="#">아이디 / 비밀번호 찾기</a>
+                    <Link to={"/register"} className="text-[rgba(0,0,0,0.7)] text-sm no-underline font-semibold">회원가입</Link>
+                    <a className="text-[rgba(0,0,0,0.7)] text-sm no-underline font-semibold" href="#">아이디 / 비밀번호 찾기</a>
                 </div>
 
                 <input
@@ -92,9 +97,7 @@ function LoginForm2() {
                 />
             </form>
 
-            <button className="w-full max-w-sm mx-auto mt-2 rounded-md overflow-hidden">
-                <img className="w-full h-auto" src={kakaoLoginImg} alt="카카오 로그인" />
-            </button>
+            <KakaoLoginButton />
         </div>
     );
 }

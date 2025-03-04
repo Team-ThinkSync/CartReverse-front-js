@@ -8,11 +8,13 @@ const Login = () => {
 
 
   return (
-    <div id="wrap" className="mx-auto w-[1280px] h-[1400px] bg-gray-100">
+    <>
       <Header />
-      <LoginForm2 />
+      <div id="wrap" className="mx-auto h-[850px] bg-gray-100">
+        <LoginForm2 />
+      </div>
       <Footer />
-    </div>
+    </>
   )
 }
 

@@ -5,9 +5,12 @@ import Footer from "../components/Footer";
 
 const Register = () => {
   return (
-    <div id="wrap" className="mx-auto w-[1280px] h-[1800px] bg-gray-100">
+    <div>
       <Header />
-      <RegisterForm />
+      <div id="wrap" className="mx-auto h-[1800px] bg-gray-100">
+        <RegisterForm />
+      </div>
+
       <Footer />
     </div>
   )
