@@ -1,4 +1,20 @@
+import { useState } from "react";
+
 const UserManagement = () => {
+
+    const [users, setUsers] = useState([
+        {id: 1, name: "홍길동", email: "hong@naver.com", nickname: "Hong", grade: "Gold", checked: false},
+        {id: 2, name: "신라면", email: "shin@naver.com", nickname: "nongshim", grade: "Bronze", checked: false},
+        {id: 3, name: "김철수", email: "kcs2010@naver.com", nickname: "fashionterrorist", grade: "Diamond", checked: false},
+        {id: 4, name: "이진우", email: "ljw0320@naver.com", nickname: "jinwooo", grade: "Silver", checked: false},
+    ]);
+
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredUsers = users.filter(user =>
+        user.name.includes(searchTerm) || user.email.includes(searchTerm)
+    );
+
     return(
         <div id="wrap" className="p-8">
             <div className="bg-white p-8 rounded-3xl">
@@ -25,63 +41,29 @@ const UserManagement = () => {
                         <th className="border p-2">등급</th>
                     </tr>
                 </thead>
-                <tbody className="text-center ">
-                    <tr>
-                        <td><input type="checkbox" /></td> 
-                        <td>1</td> 
-                        <td>홍길동</td>
-                        <td>hong@naver.com</td>
-                        <td>Hong</td>
-                        <td>Gold</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" /></td> 
-                        <td>2</td> 
-                        <td>신라면</td>
-                        <td>shin@naver.com</td>
-                        <td>NongShim</td>
-                        <td>Bronze</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" /></td> 
-                        <td>3</td> 
-
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" /></td> 
-                        <td>4</td> 
-
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" /></td> 
-                        <td>5</td> 
-
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" /></td> 
-                        <td>6</td> 
-
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" /></td> 
-                        <td>7</td> 
-
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" /></td> 
-                        <td>8</td> 
-
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" /></td> 
-                        <td>9</td> 
-
-                    </tr>                    <tr>
-                        <td><input type="checkbox" /></td> 
-                        <td>10</td> 
-
-                    </tr>
-                </tbody>
+                    <tbody className="text-center ">
+                        {filteredUsers.length > 0 ? (
+                            filteredUsers.map((user, index) => (
+                                <tr key={user.id}>
+                                    <td className="border p-2">
+                                        <input
+                                            type="checkbox"
+                                            checked={user.checked}
+                                        />
+                                    </td>
+                                    <td className="border p-2">{index + 1}</td>
+                                    <td className="border p-2">{user.name}</td>
+                                    <td className="border p-2">{user.email}</td>
+                                    <td className="border p-2">{user.nickname}</td>
+                                    <td className="border p-2">{user.grade}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan={6} className="border p-4 text-gray-500">검색된 회원이 없습니다.</td>
+                            </tr>
+                        )}                
+                    </tbody>
                 </table>
 
                 <div className="flex justify-between">
@@ -96,7 +78,7 @@ const UserManagement = () => {
                     <button
                     className="ml-4 px-4 py-2 bg-[#708090] text-white rounded-md"
                     >
-                    회원 추가
+                    회원 수정
                     </button>
 
                 </div>
