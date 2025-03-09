@@ -3,6 +3,8 @@ import { Card, CardContent } from "../components/Card";
 import { Button } from "../components/Button";
 import { Loader2 } from "lucide-react";
 import Dummy from "../assets/images/clothes.png";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const categories = ["전체", "봄", "여름", "가을", "겨울"];
 const dummyData = [
@@ -49,6 +51,7 @@ export default function FashionFeed() {
 
   return (
     <div className="max-w-4xl mx-auto p-4">
+      <Header />
       <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
         {categories.map((cat) => (
           <Button
@@ -86,6 +89,7 @@ export default function FashionFeed() {
           items.length > 0 && <Button onClick={loadMore} variant="outline">더 보기</Button>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Heart, ShoppingBag, Star, ChevronDown, Share2, Truck, CreditCard, MessageSquare } from "lucide-react";
 import { Button } from "../components/Button";
 import Clothes from "../assets/images/clothes.png";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const productData = {
   id: 1,
@@ -47,6 +49,7 @@ export default function ProductDetail() {
   
   return (
     <div className="max-w-4xl mx-auto p-4 font-sans">
+      <Header/>
       {/* 상품 정보 섹션 */}
       <div className="flex flex-col md:flex-row gap-8">
         {/* 이미지 섹션 */}
@@ -244,6 +247,7 @@ export default function ProductDetail() {
           구매하기
         </button>
       </div>
+      <Footer/>
     </div>
   );
 }

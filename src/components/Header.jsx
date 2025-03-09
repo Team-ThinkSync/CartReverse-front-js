@@ -18,7 +18,7 @@ function Header() {
   <div id="header">
 
     {/* Header-top */}
-    <div id="header-top" className="bg-[#708090] flex justify-between items-center p-5 mt-5">
+    <div id="header-top" className="bg-header flex justify-between items-center p-5 mt-5">
       <div id="logo" className="text-[white] text-3xl font-extrabold">
       <Link to={"/"}>ECLO</Link>
       </div>
@@ -148,6 +148,7 @@ function Header() {
         <li className="font-libre text-3xl text-gray-200 w-20">|</li>
 
         <li className="font-libre text-3xl text-gray-500 cursor-pointer w-full" onClick={() => Navigate("/fashionFeed")}>Social</li>
+
       </ul>
     </div>
   </div>
