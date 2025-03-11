@@ -68,7 +68,11 @@ const ProductManagement = () => {
 
   // 수정할 상품 찾기 & 모달 열기
   const handleEditProduct = () => {
-    const selectedProduct = products.find(product => product.checked);
+    const selectedProduct = products.filter(product => product.checked);
+    if(selectedProduct.length>0){
+      alert("상품을 한 개만 선택하세요.");
+      return;
+    }
     if (!selectedProduct) {
       alert("수정할 상품을 선택하세요.");
       return;
@@ -130,26 +134,26 @@ const ProductManagement = () => {
           </thead>
           <tbody className="text-center">
               {filteredProducts.length > 0 ? (
-                  filteredProducts.map((product, index) => (
-                      <tr key={product.id}>
-                          <td className="border p-2">
-                              <input
-                                  type="checkbox"
-                                  checked={product.checked}
-                                  onChange={() => handleCheckboxChange(product.id)}
-                              />
-                          </td>
-                          <td className="border p-2">{index + 1}</td>
-                          <td className="border p-2">{product.category}</td>
-                          <td className="border p-2">{product.subcategory}</td>
-                          <td className="border p-2">{product.itemName}</td>
-                          <td className="border p-2">{parseInt(product.itemPrice).toLocaleString()} 원</td>
-                      </tr>
-                  ))
+                filteredProducts.map((product, index) => (
+                    <tr key={product.id}>
+                        <td className="border p-2">
+                          <input
+                              type="checkbox"
+                              checked={product.checked}
+                              onChange={() => handleCheckboxChange(product.id)}
+                          />
+                        </td>
+                        <td className="border p-2">{index + 1}</td>
+                        <td className="border p-2">{product.category}</td>
+                        <td className="border p-2">{product.subcategory}</td>
+                        <td className="border p-2">{product.itemName}</td>
+                        <td className="border p-2">{parseInt(product.itemPrice).toLocaleString()} 원</td>
+                    </tr>
+                ))
               ) : (
-                  <tr>
-                      <td colSpan={6} className="border p-4 text-gray-500">검색된 상품이 없습니다.</td>
-                  </tr>
+                <tr>
+                    <td colSpan={6} className="border p-4 text-gray-500">검색된 상품이 없습니다.</td>
+                </tr>
               )}
           </tbody>
         </table>
@@ -157,7 +161,7 @@ const ProductManagement = () => {
         {/* 버튼 영역 */}
         <div className="flex justify-between">
           <button
-            className="ml-4 px-4 py-2 bg-[#708090] text-white rounded-md"
+            className="ml-4 px-4 py-2 bg-gray-500 text-white rounded-md"
             onClick={handleDeleteSelected}
           >
             상품 삭제
@@ -244,7 +248,7 @@ const ProductManagement = () => {
               </div>
         
               <div className="flex justify-end gap-2">
-                <button className="px-4 py-2 bg-[#708090] text-white rounded-md" onClick={() => setIsEditing(false)}>취소</button>
+                <button className="px-4 py-2 bg-gray-500 text-white rounded-md" onClick={() => setIsEditing(false)}>취소</button>
                 <button className="px-4 py-2 bg-[#708090] text-white rounded-md" onClick={handleUpdateProduct}>저장</button>
               </div>
             </div>
