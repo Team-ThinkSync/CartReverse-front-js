@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const AdminHeader = () => {
   // 현재 활성화된 네비게이션 항목을 저장
@@ -12,11 +12,11 @@ const AdminHeader = () => {
         <div id="logo" className="flex items-center justify-center bg-[white] text-[#708090] text-3xl font-extrabold ml-10 z-50">
           <NavLink to={"/"}>ECLO</NavLink>
         </div>
-        <div>
+        <Link to={"/"}>
           <svg className="mr-10" xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#708090">
             <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/>
           </svg>
-        </div>
+        </Link>
       </div>
 
       {/* 네비게이션 */}
@@ -28,7 +28,7 @@ const AdminHeader = () => {
             }`}
             onClick={() => setActiveNav("/admin/admininquiry")}
           >
-            <NavLink to="/admin/admininquiry">상품문의</NavLink>
+            <NavLink className="w-full h-full block" to="/admin/admininquiry">상품문의</NavLink>
           </li>
 
           <li 
@@ -37,7 +37,7 @@ const AdminHeader = () => {
             }`}
             onClick={() => setActiveNav("/admin/users")}
           >
-            <NavLink to="/admin/users">회원관리</NavLink>
+            <NavLink className="w-full h-full block" to="/admin/users">회원관리</NavLink>
           </li>
 
           <li 
@@ -46,7 +46,7 @@ const AdminHeader = () => {
             }`}
             onClick={() => setActiveNav("/admin/products")}
           >
-            <NavLink to="/admin/products">상품관리</NavLink>
+            <NavLink className="w-full h-full block" to="/admin/products">상품관리</NavLink>
           </li>
         </ul>
       </div>
