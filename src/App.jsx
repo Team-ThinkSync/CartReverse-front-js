@@ -11,15 +11,16 @@ import Cart from "./pages/Cart";
 import Asks from "./pages/Asks";
 import AsksWrite from "./pages/AsksWrite";
 import MyPage from "./pages/MyPage";
-import KakaoRedirect from "./pages/KakaoRedirect";
-import Admin from "./pages/Admin";
-import Dashboard from "./components/admin/Dashboard";
-import UserManagement from "./components/admin/UserManagement";
-import ProductManagement from "./components/admin/ProductManagement";
 import FashionFeed from "./pages/Social";
 import BestProducts from "./pages/Best";
 import RankingPage from "./pages/Ranking";
 import ProductDetail from "./pages/ProductDetail";
+
+import KakaoRedirect from "./pages/KakaoRedirect";
+import Admin from "./pages/Admin";
+import AdminInquiry from "./components/admin/AdminInquiry";
+import UserManagement from "./components/admin/UserManagement";
+import ProductManagement from "./components/admin/ProductManagement";
 
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
 
       {/* 관리자 페이지 */}
         <Route path="/admin" element={<Admin />}>
-          <Route path="dashboard" element={<Dashboard/>} />
+          <Route path="admininquiry" element={<AdminInquiry/>} />
           <Route path="users" element={<UserManagement/>} />
           <Route path="products" element={<ProductManagement/>} />
         </Route>
