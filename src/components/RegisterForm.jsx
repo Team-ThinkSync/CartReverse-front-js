@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AddressSearch from "./AddressSearch";
 
 function RegisterForm() {
   const [allChecked, setAllChecked] = useState(false);
@@ -36,8 +37,13 @@ function RegisterForm() {
   const [pw, setPw] = useState('');
   const [emailValid, setEmailValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
+  const [pwCheck, setPwCheck] = useState('');
+
+  const [pwMatch, setPwMatch] = useState(false);
   const [notAllow, setNotAllow] = useState(true);
   const navigate = useNavigate();
+  const [address, setAddress] = useState("");
+
 
   // 이메일 입력 핸들러
   const handleEmail = (e) => {
@@ -62,6 +68,12 @@ function RegisterForm() {
         setPwValid(false);
       }
   };
+  const handlePwCheck = (e) => {
+    const value = e.target.value;
+    setPwCheck(value);
+    setPwMatch(value === pw);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onClickConfirmButton();
@@ -82,11 +94,9 @@ function RegisterForm() {
   }, [emailValid, pwValid]);
 
 
-
-
   return (
-    <div id="main" className="flex flex-col h-[1400px] mx-[400px] mt-[100px]">
-      <h2 id="login__title" className="mt-[100px] mb-[60px] text-2xl font-bold">
+    <div id="main" className="flex flex-col w-[480px] h-[1400px] mx-auto mt-[50px]">
+      <h2 id="register__title" className="mt-[200px] mb-[60px] text-3xl font-bold text-gray-700">
         회원가입
       </h2>
 
@@ -94,24 +104,28 @@ function RegisterForm() {
         {/* 이메일 입력 */}
         <label htmlFor="email-address" className="flex flex-col mb-[7px]">
           <span className="text-[rgba(0,0,0,0.7)] font-semibold mb-[7px]">이메일주소</span>
+
           <input
-            id="login-id"
-            type="email"
+            id="register-id"
+            type="text"
             value={email}
             onChange={handleEmail}
-            placeholder="example@email.com"
-            className="text-2xl border-[rgba(0,0,0,0.7)] mb-[10px] focus:outline-none focus:border-black"
+            className="border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"
           />
+          {
+            !emailValid && email.length >0 && (
+              <span className="text-red-500 text-sm -mt-2 mb-2">올바른 이메일 형식을 입력하세요.</span>
+            )
+          }
         </label>
         {/* 이름 입력 */}
         <label htmlFor="register-username" className="flex flex-col mb-[7px]">
-          <span className="text-[rgba(0,0,0,0.7)] font-semibold mb-[7px]">이름</span>
+        <span className="text-[rgba(0,0,0,0.7)] font-semibold mb-[7px]">이름</span>
+
           <input
             id="login-username"
             type="username"
-            placeholder="이름을 입력하세요"
-            className="text-2xl border-[rgba(0,0,0,0.7)] mb-[10px] focus:outline-none focus:border-black"
-          />
+            className="text-lg border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"          />
         </label>
 
         {/* 닉네임 입력 */}
@@ -120,8 +134,7 @@ function RegisterForm() {
           <input
             id="login-nickname"
             type="nickname"
-            placeholder="닉네임을 입력하세요"
-            className="text-2xl border-[rgba(0,0,0,0.7)] mb-[10px] focus:outline-none focus:border-black"
+            className="text-lg border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"
           />
         </label>
         
@@ -132,9 +145,27 @@ function RegisterForm() {
           <input
             id="login-password"
             type="password"
-            placeholder="비밀번호를 입력하세요"
-            className="text-2xl border-[rgba(0,0,0,0.7)] mb-[10px] focus:outline-none focus:border-black"
+            onChange={handlePw}
+
+            className="text-lg border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"
           />
+        </label>
+
+          {/* 비밀번호 확인 입력 */}
+          <label htmlFor="register-password" className="flex flex-col mb-[7px]">
+          <span className="text-[rgba(0,0,0,0.7)] font-semibold mb-[7px]">비밀번호 확인</span>
+          <input
+            id="login-password"
+            type="password"
+            onChange={handlePwCheck}
+
+            className="text-lg border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"
+          />
+          {
+            !pwMatch && pwCheck.length > 0 && (
+              <span className="text-red-500 text-sm -mt-2 mb-2">비밀번호가 일치하지 않습니다.</span>
+            )
+          }
         </label>
 
         {/* 전화번호 입력 */}
@@ -143,29 +174,15 @@ function RegisterForm() {
           <input
             id="phone-number"
             type="tel"
-            placeholder="전화번호를 '-'를 제외하고 입력하세요"
 
-            className="text-2xl border-[rgba(0,0,0,0.7)] mb-[10px] focus:outline-none focus:border-black"
+            className="text-lg border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"
           />
         </label>
 
-        {/* 주소 입력 */}
-        <label htmlFor="address" className="flex flex-col font-semibold mb-[7px]">
-          <span className="text-[rgba(0,0,0,0.7)] mb-[7px]">주소</span>
-          <input
-            id="address"
-            type="text"
-            className="text-2xl border-[rgba(0,0,0,0.7)] mb-1 focus:outline-none focus:border-black"
-          />
-          <input
-            id="specific-address"
-            type="text"
-            className="text-2xl border-[rgba(0,0,0,0.7)] mb-[10px] focus:outline-none focus:border-black"
-          />
-        </label>
+        <AddressSearch setAddress={setAddress}/>
 
         {/* 이용약관 */}
-        <div id="이용약관" className="flex flex-col h-[300px] bg-slate-100 my-10 font-bold text-[rgba(0,0,0,0.9)]">
+        <div id="이용약관" className="flex flex-col h-[300px] bg-gray-100 my-10 font-bold text-[rgba(0,0,0,0.9)]">
           <div className="h-20 flex items-center">
             <input
               className="w-[20px] h-[20px] mr-2"

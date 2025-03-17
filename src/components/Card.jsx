@@ -1,27 +1,41 @@
 import React from "react";
 
-export const Card = ({ children, className = "", ...props }) => {
+export const Card = ({ children, className = "", videoSrc, imageSrc, ...props }) => {
   return (
     <div 
-      className={`bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden ${className}`}
+      className={`relative rounded-lg border border-gray-200 shadow-sm overflow-hidden h-full ${className}`}
       {...props}
     >
-      {children}
+      
+      {videoSrc ? (
+        <video 
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src={videoSrc} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      ) : imageSrc ? (
+        <img 
+          src={imageSrc} 
+          alt="Background" 
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      ) : null}
+
+      <div className="relative z-10 h-full flex flex-col">
+        {children}
+      </div>
     </div>
   );
 };
 
 export const CardContent = ({ children, className = "", ...props }) => {
   return (
-    <div className={`p-4 ${className}`} {...props}>
-      {children}
-    </div>
-  );
-};
-
-export const CardHeader = ({ children, className = "", ...props }) => {
-  return (
-    <div className={`p-4 border-b border-gray-200 ${className}`} {...props}>
+    <div className={`p-4 flex-grow ${className}`} {...props}>
       {children}
     </div>
   );
@@ -35,10 +49,3 @@ export const CardTitle = ({ children, className = "", ...props }) => {
   );
 };
 
-export const CardFooter = ({ children, className = "", ...props }) => {
-  return (
-    <div className={`p-4 border-t border-gray-200 ${className}`} {...props}>
-      {children}
-    </div>
-  );
-};

@@ -28,7 +28,7 @@ const mockData = [
 
 function Main() {
     return (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", padding: "20px" }}>
+        <div className="mx-auto my-20" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", padding: "20px", justifyItems:"center" }}>
             {mockData.map((data, index) => (
                 <Card key={index} title={data.title} subtitle={data.subtitle} />
             ))}

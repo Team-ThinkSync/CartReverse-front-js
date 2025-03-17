@@ -47,7 +47,7 @@ const ImageSlider = () => {
   };
 
   return (
-    <div className="relative w-full my-8 mb-12">
+    <div className="relative w-full my-10 mb-12">
       <Slider {...settings}>
         <div>
           <img className="w-full h-[650px] object-cover object-top" 
