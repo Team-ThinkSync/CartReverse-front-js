@@ -29,49 +29,74 @@ const AsksWrite = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        //일단 여기에 백엔드 API 호출 코드 들어가야함 그러고 데이터 전송 로직
-        console.log(formData);
+
+
+        const formDataToSend = new FormData();
+        for (const key in formData) {
+            formDataToSend.append(key, formData[key]);
+        }
+
+        // 여기서 백엔드 API 호출
+        try {
+            const response = await fetch('API_URL_HERE', {
+                method: 'POST',
+                body: formDataToSend,
+            });
+
+            if (!response.ok) {
+                throw new Error('서버 오류 발생');
+            }
+
+    
+            console.log('폼 제출 성공');
+        } catch (error) {
+            console.error('폼 제출 실패:', error);
+        }
     };
 
     return (
-        <form onSubmit={handleSubmit} style={styles.Container}>
-            <div>
-                <label>문의 유형:</label>
-                <input type="text" name="inquiryType" value={formData.inquiryType} onChange={handleChange} />
-            </div>
-            <div>
-                <label>주문 번호:</label>
-                <input type="text" name="orderNumber" value={formData.orderNumber} onChange={handleChange} />
-            </div>
-            <div>
-                <label>주문 일자:</label>
-                <input type="date" name="orderDate" value={formData.orderDate} onChange={handleChange} />
-            </div>
-            <div>
-                <label>성명:</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} />
-            </div>
-            <div>
-                <label>아이디:</label>
-                <input type="text" name="userId" value={formData.userId} onChange={handleChange} />
-            </div>
-            <div>
-                <label>이메일:</label>
-                <input type="email" name="email" value={formData.email} onChange={handleChange} />
-            </div>
-            <div>
-                <label>제목:</label>
-                <input type="text" name="title" value={formData.title} onChange={handleChange} />
-            </div>
-            <div>
-                <label>내용:</label>
-                <textarea name="content" value={formData.content} onChange={handleChange}></textarea>
-            </div>
-            <div>
-                <label>사진 첨부:</label>
-                <input type="file" name="photo" onChange={handleFileChange} />
+        <form onSubmit={handleSubmit} className={styles.Container}>
+            <h1>고객 문의</h1>
+            
+            <div className={styles.FormGrid}>
+                <div>
+                    <label>문의 유형:</label>
+                    <input type="text" name="inquiryType" value={formData.inquiryType} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>주문 번호:</label>
+                    <input type="text" name="orderNumber" value={formData.orderNumber} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>주문 일자:</label>
+                    <input type="date" name="orderDate" value={formData.orderDate} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>성명:</label>
+                    <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>아이디:</label>
+                    <input type="text" name="userId" value={formData.userId} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label>이메일:</label>
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                </div>
+                <div className={styles.FullWidth}>
+                    <label>제목:</label>
+                    <input type="text" name="title" value={formData.title} onChange={handleChange} required />
+                </div>
+                <div className={styles.FullWidth}>
+                    <label>내용:</label>
+                    <textarea name="content" value={formData.content} onChange={handleChange} required></textarea>
+                </div>
+                <div className={styles.FullWidth}>
+                    <label>사진 첨부:</label>
+                    <input type="file" name="photo" onChange={handleFileChange} />
+                </div>
             </div>
             <button type="submit">제출</button>
         </form>

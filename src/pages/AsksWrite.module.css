@@ -1,3 +1,102 @@
 .Container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .Container h2 {
+    margin-top: 0;
+    color: #444;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .Container div {
+    margin-bottom: 1.25rem;
+  }
+  
+  .Container label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+  }
+  
+  .Container input[type="text"],
+  .Container input[type="email"],
+  .Container input[type="date"],
+  .Container textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #444;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .Container input[type="file"] {
+    width: 100%;
+    padding: 0.75rem 0;
+    color: #555;
+  }
+  
+  .Container input:focus,
+  .Container textarea:focus {
+    border-color: #888;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(136, 136, 136, 0.2);
+  }
+  
+  .Container textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+  
+  .Container button {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background-color: #666;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+  }
+  
+  .Container button:hover {
+    background-color: #555;
+  }
+  
+  .Container button:active {
+    background-color: #444;
+  }
+
+  @media (max-width: 768px) {
+    .Container {
+      padding: 1.5rem;
+      margin: 1rem;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .FormGrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
     
-}
+    .FullWidth {
+      grid-column: 1 / -1;
+    }
+  }
