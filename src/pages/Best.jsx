@@ -73,8 +73,9 @@ const bestItems = [
     };
 
     return (
-      <div className="max-w-4xl mx-auto p-4 font-sans">
+      <div className="w-full mx-auto p-4 font-sans">
         <Header />
+        <div className="flex-1 flex flex-col p-4 overflow-auto">
         <div className="flex justify-between items-center mb-5">
           <h2 className="text-lg font-bold">BEST</h2>
           <span className="text-sm text-gray-500 cursor-pointer hover:underline">더보기</span>
@@ -139,6 +140,7 @@ const bestItems = [
                 </CardContent>
               </Card>
             ))}
+            </div>
             <Footer/>
           </div>
         </div>
