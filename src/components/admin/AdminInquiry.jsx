@@ -1,30 +1,31 @@
+
 import { useState, useEffect } from "react";
 
-const UserManagement = () => {
+const AdminInquiry = () => {
 
   const [users, setUsers] = useState([
-    {id: 1, name: "홍길동", email: "hong@naver.com", nickname: "Hong", grade: "Gold", checked: false},
-    {id: 2, name: "신라면", email: "shin@naver.com", nickname: "nongshim", grade: "Bronze", checked: false},
-    {id: 3, name: "김철수", email: "kcs2010@naver.com", nickname: "fashionterrorist", grade: "Diamond", checked: false},
-    {id: 4, name: "이우진", email: "lwj0320@naver.com", nickname: "woojin", grade: "Silver", checked: false},
-    {id: 5, name: "이순신", email: "lee@naver.com", nickname: "general", grade: "Gold", checked: false},
-    {id: 6, name: "박지성", email: "park@naver.com", nickname: "jspark", grade: "Platinum", checked: false},
-    {id: 7, name: "손흥민", email: "son@naver.com", nickname: "sonaldo", grade: "Diamond", checked: false},
-    {id: 8, name: "유재석", email: "yoo@naver.com", nickname: "grasshopper", grade: "Gold", checked: false},
-    {id: 9, name: "강호동", email: "kang@naver.com", nickname: "strongman", grade: "Silver", checked: false},
-    {id: 10, name: "정형돈", email: "jung@naver.com", nickname: "handsome", grade: "Gold", checked: false},
-    {id: 11, name: "김연아", email: "kim@naver.com", nickname: "queen", grade: "Diamond", checked: false},
+    {id: 1, name: "홍길동", title: "반품 요청", nickname: "Hong", isAnswered: "답변예정", checked: false},
+    {id: 2, name: "신라면", title: "재입고 날짜", nickname: "nongshim", isAnswered: "답변완료", checked: false},
+    {id: 3, name: "김철수", title: "사이즈 교환", nickname: "fashionterrorist", isAnswered: "답변예정", checked: false},
+    {id: 4, name: "이우진", title: "반품 요청", nickname: "woojin", isAnswered: "답변예정", checked: false},
+    {id: 5, name: "이순신", title: "반품 요청", nickname: "general", isAnswered: "답변예정", checked: false},
+    {id: 6, name: "박지성", title: "반품 요청", nickname: "jspark", isAnswered: "답변예정", checked: false},
+    {id: 7, name: "손흥민", title: "반품 요청", nickname: "sonaldo", isAnswered: "답변예정", checked: false},
+    {id: 8, name: "유재석", title: "반품 요청", nickname: "grasshopper", isAnswered: "답변예정", checked: false},
+    {id: 9, name: "강호동", title: "반품 요청", nickname: "strongman", isAnswered: "답변예정", checked: false},
+    {id: 10, name: "정형돈", title: "반품 요청", nickname: "handsome", isAnswered: "답변예정", checked: false},
+    {id: 11, name: "김연아", title: "반품 요청", nickname: "queen", isAnswered: "답변예정", checked: false},
   ]);
 
-	const [searchTerm, setSearchTerm] = useState("");
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [newProduct, setNewProduct] = useState({
-		name: "",
-		email: "",
-		grade: "",
-		checked: false
-	});
-	const [isEditing, setIsEditing] = useState(false); // 회원 수정 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newProduct, setNewProduct] = useState({
+        name: "",
+        email: "",
+        isAnswered: "",
+        checked: false
+    });
+    const [isEditing, setIsEditing] = useState(false); // 회원 수정 
   const [editUser, setEditUser] = useState(null); // 수정할 회원 저장
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10; // 페이지당 최대 회원 수
@@ -32,9 +33,9 @@ const UserManagement = () => {
 
 
   // 검색 기능
-	const filteredUsers = users.filter(user =>
-		user.name.includes(searchTerm) || user.email.includes(searchTerm)
-	);
+    const filteredUsers = users.filter(user =>
+        user.name.includes(searchTerm) || user.email.includes(searchTerm)
+    );
 
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
   const indexOfLastUser = currentPage * usersPerPage;
@@ -64,12 +65,6 @@ const handleNicknameClick = (user) => {
   setEditUser({ ...user });
 };
 
-// editUser가 설정되면 모달을 자동으로 열도록 설정
-useEffect(() => {
-  if (editUser) {
-    setIsEditing(true);
-  }
-}, [editUser]);
 
 // 수정할 유저 찾기 & 모달 열기
 const handleEditUser = () => {
@@ -116,7 +111,7 @@ return(
   <div id="wrap" className="p-8">
     <div className="bg-white p-8 rounded-3xl">
 
-      <h2 className="text-2xl font-bold mb-4 ">회원 관리</h2>
+      <h2 className="text-2xl font-bold mb-4 ">문의 내역</h2>
 
       {/* 검색창 */}
       <input
@@ -138,9 +133,9 @@ return(
             <th className="border p-2">선택</th>
             <th className="border p-2">NO.</th>
             <th className="border p-2">이름</th>
-            <th className="border p-2">이메일</th>
+            <th className="border p-2">문의 제목</th>
             <th className="border p-2">닉네임</th>
-            <th className="border p-2">등급</th>
+            <th className="border p-2">답변 여부</th>
           </tr>
         </thead>
         <tbody className="text-center ">
@@ -156,9 +151,9 @@ return(
                   </td>
                   <td className="border p-2">{indexOfFirstUser + index + 1}</td>
                   <td className="border p-2">{user.name}</td>
-                  <td className="border p-2">{user.email}</td>
-                  <td className="border p-2 cursor-pointer hover:underline" onClick={() => handleNicknameClick(user)}>{user.nickname}</td>
-                  <td className="border p-2">{user.grade}</td>
+                  <td className="border p-2 cursor-pointer hover:underline">{user.title}</td>
+                  <td className="border p-2" onClick={() => handleNicknameClick(user)}>{user.nickname}</td>
+                  <td className="border p-2">{user.isAnswered}</td>
                 </tr>
               ))
             ) : (
@@ -192,14 +187,14 @@ return(
         <button
         className="ml-4 px-4 py-2 bg-gray-500 text-white rounded-md"
         onClick={handleDeleteSelected}>
-        회원 삭제
+        문의 삭제
         </button>
 
         {/* 회원 수정 버튼 */}
         <button
         className="ml-4 px-4 py-2 bg-[#708090] text-white rounded-md"
           onClick={handleEditUser}>
-        회원 수정
+        답변 완료
         </button>
 
       </div>
@@ -224,8 +219,8 @@ return(
                 onChange={handleInputChange} value={editUser?.nickname || ""} />
 
               <label>등급</label>
-              <select name="grade" className="border p-2 rounded-md w-full mb-2"
-                onChange={handleInputChange} value={editUser?.grade || ""}>
+              <select name="isAnswered" className="border p-2 rounded-md w-full mb-2"
+                onChange={handleInputChange} value={editUser?.isAnswered || ""}>
                 <option value="Bronze">Bronze</option>
                 <option value="Silver">Silver</option>
                 <option value="Gold">Gold</option>
@@ -245,8 +240,8 @@ return(
 
 
     </div>
-	</div>
+  </div>
 )
 }
 
-export default UserManagement;
+export default AdminInquiry;

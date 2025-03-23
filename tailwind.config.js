@@ -7,6 +7,7 @@ export default {
         libre: ['"Libre Baskerville"', "serif"],
       },
       colors: {
+        header: "#708090",
         beige: "#f5f5dc",
         kakao: "#fee500",
         footer: "#DEE2E6",

@@ -18,7 +18,7 @@ function Header() {
   <div id="header">
 
     {/* Header-top */}
-    <div id="header-top" className="bg-[#708090] flex justify-between items-center p-5 mt-5">
+    <div id="header-top" className="bg-header flex justify-between items-center p-5 mt-5">
       <div id="logo" className="text-[white] text-3xl font-extrabold">
       <Link to={"/"}>ECLO</Link>
       </div>
@@ -106,6 +106,7 @@ function Header() {
     </div>
       
     {/* Header-bottom */}
+
     <div id="header-bottom" className="bg-white pt-2 bottom-1 ">
       <ul className="flex list-none gap-14 pl-12 py-3">
         <li className="font-libre text-3xl cursor-pointer  font-semibold w-1/5" onClick={() => Navigate("/bestProducts")}>Best</li>
