@@ -50,58 +50,72 @@ export default function FashionFeed() {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col">
-      <Header/>
-      <div className="flex-1 flex flex-col p-4 overflow-auto">
-        <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
-          {categories.map((cat) => (
-            <Button
-              key={cat}
-              variant={category === cat ? "default" : "outline"}
-              onClick={() => { setCategory(cat); setPage(1); }}
-            >
-              {cat}
-            </Button>
-          ))}
-        </div>
-
-        {items.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 flex-1">
-            {items.map((item) => (
-              <Card key={item.id} className="h-full">
-                <CardContent className="p-2">
-                  {item.type === "image" ? (
-                    <img src={item.media} alt={item.title} className="w-full h-32 object-cover rounded-lg" />
-                  ) : (
-                    <video 
-                      src={item.media} 
-                      className="w-full h-32 object-cover rounded-lg" 
-                      controls
-                      preload="metadata"
-                    />
-                  )}
-                  <p className="mt-2 text-sm text-gray-600 line-clamp-2">{item.title}</p>
-                </CardContent>
-              </Card>
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      
+      <main className="flex-grow py-8">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="mb-6 flex flex-wrap gap-2">
+            {categories.map((cat) => (
+              <Button
+                key={cat}
+                variant={category === cat ? "default" : "outline"}
+                onClick={() => { setCategory(cat); setPage(1); }}
+                className="px-4 py-2"
+              >
+                {cat}
+              </Button>
             ))}
           </div>
-        ) : (
-          <p className="text-center py-8 text-gray-500 flex-1 flex items-center justify-center">
-            해당 카테고리에 아이템이 없습니다.
-          </p>
-        )}
 
-        <div className="flex justify-center mt-4">
-          {loading ? (
-            <div className="flex items-center">
-              <Loader2 className="animate-spin mr-2" size={20} />
-              <span>로딩 중...</span>
+          {items.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4">
+              {items.map((item) => (
+                <Card key={item.id} className="overflow-hidden h-full">
+                  <CardContent className="p-3">
+                    {item.type === "image" ? (
+                      <img src={item.media} alt={item.title} className="w-full h-40 object-cover rounded-lg" />
+                    ) : (
+                      <video 
+                        src={item.media} 
+                        className="w-full h-40 object-cover rounded-lg" 
+                        controls
+                        preload="metadata"
+                      />
+                    )}
+                    <p className="mt-3 text-sm font-medium line-clamp-2">{item.title}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           ) : (
-            items.length > 0 && <Button onClick={loadMore} variant="outline">더 보기</Button>
+            <div className="flex justify-center items-center py-16">
+              <p className="text-center text-gray-500">
+                해당 카테고리에 아이템이 없습니다.
+              </p>
+            </div>
           )}
+
+          <div className="flex justify-center mt-8">
+            {loading ? (
+              <div className="flex items-center">
+                <Loader2 className="animate-spin mr-2" size={20} />
+                <span>로딩 중...</span>
+              </div>
+            ) : (
+              items.length > 0 && 
+              <Button 
+                onClick={loadMore} 
+                variant="outline"
+                className="px-6 py-2"
+              >
+                더 보기
+              </Button>
+            )}
+          </div>
         </div>
-      </div>
+      </main>
+      
       <Footer />
     </div>
   );

@@ -15,7 +15,7 @@ import FashionFeed from "./pages/Social";
 import BestProducts from "./pages/Best";
 import RankingPage from "./pages/Ranking";
 import ProductDetail from "./pages/ProductDetail";
-
+import SocialDetail from "./pages/SocialDetail";
 import KakaoRedirect from "./pages/KakaoRedirect";
 import Admin from "./pages/Admin";
 import AdminInquiry from "./components/admin/AdminInquiry";
@@ -45,6 +45,7 @@ function App() {
         <Route path="/fashionFeed" element={<FashionFeed/>}/>
         <Route path="/asks/write" element={<AsksWrite />} />
         <Route path="/kakao" element={<KakaoRedirect />} />
+        <Route path="/social/detail" element={<SocialDetail/>}/>
 
       {/* 관리자 페이지 */}
         <Route path="/admin" element={<Admin />}>
