@@ -4,17 +4,17 @@ import { useState, useEffect } from "react";
 const AdminInquiry = () => {
 
   const [users, setUsers] = useState([
-    {id: 1, name: "홍길동", title: "반품 요청", nickname: "Hong", isAnswered: "답변예정", checked: false},
-    {id: 2, name: "신라면", title: "재입고 날짜", nickname: "nongshim", isAnswered: "답변완료", checked: false},
-    {id: 3, name: "김철수", title: "사이즈 교환", nickname: "fashionterrorist", isAnswered: "답변예정", checked: false},
-    {id: 4, name: "이우진", title: "반품 요청", nickname: "woojin", isAnswered: "답변예정", checked: false},
-    {id: 5, name: "이순신", title: "반품 요청", nickname: "general", isAnswered: "답변예정", checked: false},
-    {id: 6, name: "박지성", title: "반품 요청", nickname: "jspark", isAnswered: "답변예정", checked: false},
-    {id: 7, name: "손흥민", title: "반품 요청", nickname: "sonaldo", isAnswered: "답변예정", checked: false},
-    {id: 8, name: "유재석", title: "반품 요청", nickname: "grasshopper", isAnswered: "답변예정", checked: false},
-    {id: 9, name: "강호동", title: "반품 요청", nickname: "strongman", isAnswered: "답변예정", checked: false},
-    {id: 10, name: "정형돈", title: "반품 요청", nickname: "handsome", isAnswered: "답변예정", checked: false},
-    {id: 11, name: "김연아", title: "반품 요청", nickname: "queen", isAnswered: "답변예정", checked: false},
+    {id: 1, name: "홍길동", title: "반품 요청", nickname: "Hong", isAnswered: "답변예정", checked: false, inquiryContent: "상품이 마음에 들지 않아 반품하고 싶습니다."},
+    {id: 2, name: "신라면", title: "재입고 날짜", nickname: "nongshim", isAnswered: "답변완료", checked: false, inquiryContent: "상품이 마음에 들지 않아 반품하고 싶습니다."},
+    {id: 3, name: "김철수", title: "사이즈 교환", nickname: "fashionterrorist", isAnswered: "답변예정", checked: false, inquiryContent: "상품이 마음에 들지 않아 반품하고 싶습니다."},
+    {id: 4, name: "이우진", title: "반품 요청", nickname: "woojin", isAnswered: "답변예정", checked: false, inquiryContent: "상품이 마음에 들지 않아 반품하고 싶습니다."},
+    {id: 5, name: "이순신", title: "반품 요청", nickname: "general", isAnswered: "답변예정", checked: false, inquiryContent: "상품이 마음에 들지 않아 반품하고 싶습니다."},
+    {id: 6, name: "박지성", title: "반품 요청", nickname: "jspark", isAnswered: "답변예정", checked: false, inquiryContent: "상품이 마음에 들지 않아 반품하고 싶습니다."},
+    {id: 7, name: "손흥민", title: "반품 요청", nickname: "sonaldo", isAnswered: "답변예정", checked: false, inquiryContent: "상품이 마음에 들지 않아 반품하고 싶습니다."},
+    {id: 8, name: "유재석", title: "반품 요청", nickname: "grasshopper", isAnswered: "답변예정", checked: false, inquiryContent: "상품이 마음에 들지 않아 반품하고 싶습니다."},
+    {id: 9, name: "강호동", title: "반품 요청", nickname: "strongman", isAnswered: "답변예정", checked: false, inquiryContent: "상품이 마음에 들지 않아 반품하고 싶습니다."},
+    {id: 10, name: "정형돈", title: "반품 요청", nickname: "handsome", isAnswered: "답변예정", checked: false, inquiryContent: "상품이 마음에 들지 않아 반품하고 싶습니다."},
+    {id: 11, name: "김연아", title: "반품 요청", nickname: "queen", isAnswered: "답변예정", checked: false, inquiryContent: "상품이 마음에 들지 않아 반품하고 싶습니다."},
   ]);
 
     const [searchTerm, setSearchTerm] = useState("");
