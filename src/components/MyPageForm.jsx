@@ -18,7 +18,7 @@ const MyPageForm = () => {
             <div className="flex flex-col ml-3">
                 <div className="mt-12 border-b-4 font-semibold text-3xl">나의 쇼핑 정보</div>
                 <ul className="ml-5 my-5 text-lg">
-                    <li className="my-2 hover:cursor-pointer">주문배송조회</li>
+                    <li className="my-2 hover:cursor-pointer">주문 내역</li>
                     <li className="my-2 hover:cursor-pointer">취소/교환/반품 내역</li>
                     <li className="my-2 hover:cursor-pointer">상품 리뷰</li>
                 </ul>

@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Card = ({ children, className = "", videoSrc, imageSrc, ...props }) => {
+
   return (
     <div 
       className={`relative rounded-lg border border-gray-200 shadow-sm overflow-hidden h-full ${className}`}
@@ -34,10 +36,16 @@ export const Card = ({ children, className = "", videoSrc, imageSrc, ...props })
 };
 
 export const CardContent = ({ children, className = "", ...props }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/social/detail');
+  };
   return (
+    <button onClick={handleClick}>
     <div className={`p-4 flex-grow ${className}`} {...props}>
       {children}
     </div>
+    </button>
   );
 };
 
