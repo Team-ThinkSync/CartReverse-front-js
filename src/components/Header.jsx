@@ -86,7 +86,6 @@ function Header() {
  
         <ul className="flex items-center gap-10 px-10">
           <li className="cursor-pointer font-[650] inline-block" onClick={() => Navigate("/")}>Home</li>
-          <li className="cursor-pointer font-[650] inline-block" onClick={() => Navigate("/NotFound")}>Magazine</li>
           <li className="cursor-pointer font-[650] inline-block" onClick={() => Navigate("/asks")}>Services</li>
           <li className="cursor-pointer font-[650] inline-block" onClick={() => Navigate("/events")}>Events</li>
           <li className="cursor-pointer font-[650] inline-block" onClick={() => Navigate("/about")}>About Us</li>

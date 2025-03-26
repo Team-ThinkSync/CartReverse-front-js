@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent } from "../components/Card";
 import { Button } from "../components/Button";
 import Clothes from "../assets/images/clothes.png";
-import { TrophyIcon, ShoppingBagIcon } from "lucide-react";
+import { TrophyIcon } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -13,6 +13,10 @@ const dummyItems = [
   { id: 2, image: Clothes, title: "오버사이즈 패딩", category: "아우터", rank: 2, price: "129,000원" },
   { id: 3, image: Clothes, title: "캐시미어 니트", category: "상의", rank: 3, price: "79,000원" },
   { id: 4, image: Clothes, title: "와이드 슬랙스", category: "바지", rank: 4, price: "69,000원" },
+  { id: 5, image: Clothes, title: "트레이닝 슈즈", category: "신발", rank: 5, price: "79,000원" },
+  { id: 6, image: Clothes, title: "데님 자켓", category: "아우터", rank: 6, price: "99,000원" },
+  { id: 7, image: Clothes, title: "베이직 티셔츠", category: "상의", rank: 7, price: "29,000원" },
+  { id: 8, image: Clothes, title: "조거 팬츠", category: "바지", rank: 8, price: "59,000원" },
 ];
 
 export default function RankingPage() {
@@ -27,7 +31,7 @@ export default function RankingPage() {
       <Header />
       
       <main className="flex-grow py-8">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-6xl mx-auto px-4">
           <h1 className="text-2xl font-bold text-center mb-6">인기 상품 랭킹</h1>
           
           <div className="mb-6">
@@ -46,12 +50,12 @@ export default function RankingPage() {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {filteredItems.map((item) => (
               <Card key={item.id} className="overflow-hidden">
                 <CardContent className="p-0">
-                  <div className="flex">
-                    <div className="flex items-center justify-center p-4 w-16">
+                  <div className="flex flex-col h-full">
+                    <div className="flex items-center justify-center p-2 w-full">
                       <span className="text-xl font-bold">{item.rank}</span>
                     </div>
                     <div className="flex-1 p-4">
@@ -59,16 +63,6 @@ export default function RankingPage() {
                       <h3 className="font-medium text-lg">{item.title}</h3>
                       <p className="text-gray-600 text-sm">{item.category}</p>
                       <p className="font-bold mt-2">{item.price}</p>
-                    </div>
-                    <div className="flex flex-col justify-between p-4 bg-gray-50">
-                      <div className="flex items-cente mb-2">
-                        <TrophyIcon size={16} className="mr-1" />
-                        <span className="text-sm">랭킹 {item.rank}위</span>
-                      </div>
-                      <Button className="flex items-center">
-                        <ShoppingBagIcon size={16} className="mr-1" />
-                        <span>장바구니</span>
-                      </Button>
                     </div>
                   </div>
                 </CardContent>
