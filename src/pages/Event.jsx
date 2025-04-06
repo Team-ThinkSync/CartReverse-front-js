@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ItemCard from "../components/ItemCard";
 import { useState } from "react";
-import useFetchItems from "../hooks/useFetchItem";
+import useFetchItems from "../hooks/useReview";
 
 const Events = () => {
     const [category, setCategory] = useState("ALL");
