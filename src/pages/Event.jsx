@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ItemCard from "../components/ItemCard";
 import { useState } from "react";
-import useFetchItems from "../hooks/useFetchItem";
+import useFetchItems from "../hooks/useReview";
 
 const Events = () => {
     const [category, setCategory] = useState("ALL");
@@ -17,15 +17,19 @@ const Events = () => {
     }
 
     return (
-      <div id="wrap" className="mx-auto w-[1280px] h-[1080px] bg-gray-100">
-      <Header />
-        <div className="grid grid-cols-3 gap-4">
-          {filteredItems.map((item) => (
-            <ItemCard key={item.id} item={item} /> // item={item}으로 전달
-          ))}
+        <div className="flex flex-col min-h-screen">
+            <Header className="w-full" />
+            
+            <div className="w-full max-w-6xl mx-auto px-4 flex-grow">
+                <div className="grid grid-cols-3 gap-4">
+                    {filteredItems.map((item) => (
+                        <ItemCard key={item.id} item={item} />
+                    ))}
+                </div>
+            </div>
+
+            <Footer className="w-full" />
         </div>
-      <Footer />
-    </div>
     );
 };
 
