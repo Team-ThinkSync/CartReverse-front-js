@@ -24,7 +24,6 @@ export const useGetAllUsers = () => {
   return useQuery("getAllUsers", getAllUsers);
 };
 
-// 유저 정보 추가
 export const useUpdateUser = () => {
   return useMutation(updateUser);
 };
@@ -56,12 +55,10 @@ export const useGetUserInfo = (userId) => {
   });
 };
 
-// 이메일 인증 번호 발송
 export const useSendEmailVerification = () => {
   return useMutation(sendEmailVerification);
 };
 
-// 로그인
 export const useLoginUser = () => {
   return useMutation(loginUser);
 };
@@ -75,3 +72,4 @@ export const useVerifyEmailCode = () => {
 export const useFindEmail = () => {
   return useMutation(findEmail);
 };
+
