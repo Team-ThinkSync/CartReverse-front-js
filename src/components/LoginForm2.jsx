@@ -1,9 +1,11 @@
 
 import { useEffect, useState } from 'react';
-import users from "../assets/data/dummy.json"
+// import users from "../assets/data/dummy.json"
 import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
 import KakaoLoginButton from "./KakaoLogin";
+import {useLoginUser} from "../hooks/useAuth";
+
 
 function LoginForm2() {
 
@@ -13,7 +15,8 @@ function LoginForm2() {
     const [pwValid, setPwValid] = useState(false);
     const [notAllow, setNotAllow] = useState(true);
     const navigate = useNavigate();
-    const {login,isLoggedIn} = useAuthStore();
+    const {login, isLoggedIn} = useAuthStore();
+    const { login: loginAPI } = useLoginUser();     
 
     // 이메일 입력 핸들러
     const handleEmail = (e) => {
@@ -33,22 +36,44 @@ function LoginForm2() {
     };
 
     // 로그인 버튼 클릭 핸들러
-    const onClickConfirmButton = (e) => {
-        e.preventDefault();  // 폼의 기본 동작 방지 (페이지 새로고침 방지)
+    const onClickConfirmButton = async (e) => {
+        e.preventDefault(); 
 
-        const currentUser = users.find((user) => user.email === email && user.password === pw);
+        const userData = {
+            email: email,
+            password: pw,
+        };
+    
+        try {
+        const res = await loginAPI(userData); 
+        console.log("res 값:" , res);
 
-
-
-        if (currentUser) {
-            alert('로그인에 성공했습니다.');
-            login(currentUser);
-            // console.log("로그인 성공")
-            navigate('/');
+        if (res.code === 200) {
+            alert("로그인에 성공했습니다.");
+            // localStorage.setItem("token", res.token);
+            login(res.data); 
+            navigate("/");
         } else {
-            alert('등록되지 않은 회원이거나 입력한 값이 일치하지 않습니다.');
+            alert(`로그인 실패: ${res.message}`);
+        }
+        } catch (err) {
+            alert("서버와 연결할 수 없습니다.");
+            console.error(err);
         }
     };
+
+
+        // const currentUser = users.find((user) => user.email === email && user.password === pw);
+
+        // if (currentUser) {
+        //     alert('로그인에 성공했습니다.');
+        //     login(currentUser);
+        //     // console.log("로그인 성공")
+        //     navigate('/');
+        // } else {
+        //     alert('등록되지 않은 회원이거나 입력한 값이 일치하지 않습니다.');
+        // }
+    // };
 
     // 입력 유효성에 따른 버튼 상태 업데이트
     useEffect(() => {

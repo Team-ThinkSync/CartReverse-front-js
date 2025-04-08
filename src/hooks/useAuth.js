@@ -1,8 +1,20 @@
 import { useState, useEffect } from "react";
-import { registerUser, getAllUsers, updateUser, resignUser, changePassword, kakaoLogin, kakaoSignup, getUserInfo, sendEmailVerification, loginUser, verifyEmailCode, findEmail } from "../api/authApi";
+import {
+  registerUser,
+  getAllUsers,
+  updateUser,
+  resignUser,
+  changePassword,
+  kakaoLogin,
+  kakaoSignup,
+  getUserInfo,
+  sendEmailVerification,
+  loginUser,
+  verifyEmailCode,
+  findEmail,
+} from "../api/authApi";
 
-
-// 회원가입 일반 
+// 회원가입 일반
 export const useRegisterUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -48,7 +60,6 @@ export const useGetAllUsers = () => {
   return { users, isLoading, error };
 };
 
-// 유저 정보 추가 
 export const useUpdateUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -153,7 +164,6 @@ export const useKakaoSignup = () => {
   return { signup, isLoading, error };
 };
 
-//마이페이지 회원 조회 
 export const useGetUserInfo = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -174,7 +184,6 @@ export const useGetUserInfo = () => {
   return { userInfo, isLoading, error, fetchUserInfo };
 };
 
-// 이메일 인증 번호 발송 
 export const useSendEmailVerification = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -195,7 +204,6 @@ export const useSendEmailVerification = () => {
   return { sendVerification, isLoading, error };
 };
 
-// 로그인 
 export const useLoginUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -257,9 +265,4 @@ export const useFindEmail = () => {
 
   return { find, isLoading, error };
 };
-
-
-
-
-
 

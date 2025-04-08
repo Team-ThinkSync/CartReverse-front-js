@@ -10,7 +10,7 @@ const MyPageForm = () => {
             <div className="w-[1280px] h-[150px] flex items-center bg-slate-700 ">
                 {
                     isLoggedIn ?
-                    <h1 className="ml-8 mt- text-4xl text-white">{currentUser?.name}</h1>
+                    <h1 className="ml-8 mt- text-4xl text-white">{currentUser?.username}</h1>
                     : <h1>로그인</h1>
                 }
             </div>
