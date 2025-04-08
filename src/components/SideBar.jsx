@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useAuthStore from "../store/authStore";
-import Users from "../assets/data/dummy.json"
+import { useLoginUser } from "../hooks/useAuth";
+// import Users from "../assets/data/dummy.json"
 
 
 
 function SideBar({ isSidebarOpen, setIsSidebarOpen }) {
   
     const { isLoggedIn, currentUser } = useAuthStore();
-
+    const { login: loginUser } = useLoginUser();   
 
     return (
     <>
@@ -19,10 +20,10 @@ function SideBar({ isSidebarOpen, setIsSidebarOpen }) {
       >
         <div className="p-5 flex items-center border-b h-24">
         {
-            isLoggedIn && currentUser 
+            isLoggedIn && currentUser && currentUser.nickname
             ? (
             <>
-              <span className="p-2 font-semibold text-xl"> {currentUser.name}</span>
+              <span className="p-2 font-semibold text-xl"> {currentUser.username}</span>
                <span>님 환영합니다.</span>           
             </>
             )
@@ -36,14 +37,14 @@ function SideBar({ isSidebarOpen, setIsSidebarOpen }) {
         </div>
 
         {
-         isLoggedIn && (
+         isLoggedIn && currentUser && currentUser.nickname && (
           <ul className="p-10 space-y-8">
             <div className="p-20 border-solid border-4 border-gray-200 m-auto w-60 h-60 bg-gray-200 rounded-3xl">
             </div>
 
             <li className="cursor-pointer hover:text-gray-600  text-center">
-              <div className="font-bold text-2xl">{currentUser.nickname}</div>
-              <div className="font-semibold text-lg mt-2">{currentUser.rank}</div>
+              <div className="font-bold text-2xl">{currentUser?.nickname}</div>
+              {/* <div className="font-semibold text-lg mt-2">{currentUser.rank}</div> */}
             </li>
             <li className="cursor-pointer hover:text-gray-600">
               <span>주문배송조회</span>

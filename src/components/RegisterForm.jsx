@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddressSearch from "./AddressSearch";
+import {useRegisterUser} from "../hooks/useAuth";
+
 
 function RegisterForm() {
   const [allChecked, setAllChecked] = useState(false);
@@ -10,6 +12,8 @@ function RegisterForm() {
     privacy: false,
     marketing: false,
   });
+  const { register, isLoading, error } = useRegisterUser();
+
 
   // 모두 동의 체크박스 클릭 시 실행되는 함수
   const handleAllCheck = () => {
@@ -74,10 +78,41 @@ function RegisterForm() {
     setPwMatch(value === pw);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onClickConfirmButton();
-  };  
+    const elements = e.target.elements;
+    console.log("Form submitted!")
+  
+    // 필수 약관 체크
+    if (!individualChecks.age || !individualChecks.terms || !individualChecks.privacy) {
+      alert("필수 약관에 모두 동의해주세요.");
+      return;
+    }
+  
+    const userData = {
+      email: email,
+      nickname: elements["register-nickname"]?.value,
+      username: elements["register-username"]?.value,
+      password: pw,
+      phoneNumber: elements["phone-number"]?.value,
+      address: address,
+    };
+    console.log("전송할 userData:", userData);
+
+    try {
+      const res = await register(userData);
+      console.log(res.code);
+      if (res.code === 200) {
+        alert("회원가입이 완료되었습니다!");
+        navigate("/");
+      } else {
+        alert(`회원가입 실패: ${res.message}`);
+      }
+    } catch (err) {
+      alert("서버 통신 중 오류가 발생했습니다.");
+      console.error(err);
+    }
+  };
 
   const onClickConfirmButton = (e) => {
     alert('회원가입이 완료되었습니다.')
@@ -123,8 +158,9 @@ function RegisterForm() {
         <span className="text-[rgba(0,0,0,0.7)] font-semibold mb-[7px]">이름</span>
 
           <input
-            id="login-username"
-            type="username"
+            id="register-username"
+            name="register-username"
+            type="text"
             className="text-lg border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"          />
         </label>
 
@@ -132,8 +168,9 @@ function RegisterForm() {
         <label htmlFor="register-nickname" className="flex flex-col mb-[7px]">
           <span className="text-[rgba(0,0,0,0.7)] font-semibold mb-[7px]">닉네임</span>
           <input
-            id="login-nickname"
-            type="nickname"
+            id="register-nickname"
+            name="register-nickname"
+            type="text"
             className="text-lg border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"
           />
         </label>
@@ -143,7 +180,7 @@ function RegisterForm() {
         <label htmlFor="register-password" className="flex flex-col mb-[7px]">
           <span className="text-[rgba(0,0,0,0.7)] font-semibold mb-[7px]">비밀번호</span>
           <input
-            id="login-password"
+            id="register-password"
             type="password"
             onChange={handlePw}
 
@@ -155,7 +192,7 @@ function RegisterForm() {
           <label htmlFor="register-password" className="flex flex-col mb-[7px]">
           <span className="text-[rgba(0,0,0,0.7)] font-semibold mb-[7px]">비밀번호 확인</span>
           <input
-            id="login-password"
+            id="register-password"
             type="password"
             onChange={handlePwCheck}
 
@@ -174,7 +211,7 @@ function RegisterForm() {
           <input
             id="phone-number"
             type="tel"
-
+            name="phone-number"
             className="text-lg border-2 border-gray-400 rounded-lg mb-[10px] p-2 focus:outline-none focus:border-black"
           />
         </label>
