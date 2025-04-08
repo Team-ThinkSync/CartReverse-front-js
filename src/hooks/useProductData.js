@@ -1,66 +1,65 @@
-import { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { fetchProducts, createProduct, fetchProductDetails, deleteProduct, updateProduct, fetchProductsByCategory } from "../api/productApi";
 
-//상품 목록 훅
+// 상품 목록 훅
 const useProductData = () => {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const queryClient = useQueryClient();
 
   // 상품 목록 가져오기
-  useEffect(() => {
-    const fetchAllProducts = async () => {
-      try {
-        setIsLoading(true);
-        const data = await fetchProducts();
-        setProducts(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchAllProducts();
-  }, []);
+  const { data: products, isLoading, error } = useQuery("products", fetchProducts);
 
   // 상품 추가하기
-  const handleAddProduct = async (productData) => {
-    try {
-      const newProduct = await createProduct(productData);
-      setProducts((prev) => [...prev, newProduct]);
-    } catch (err) {
+  const addProductMutation = useMutation(createProduct, {
+    onSuccess: (newProduct) => {
+      queryClient.setQueryData("products", (oldProducts) => [...oldProducts, newProduct]);
+    },
+    onError: (err) => {
       console.error("상품 추가 중 오류:", err);
-    }
+    },
+  });
+
+  const handleAddProduct = (productData) => {
+    addProductMutation.mutate(productData);
   };
 
   // 상품 삭제하기
-  const handleDeleteProduct = async (id) => {
-    try {
-      await deleteProduct(id);
-      setProducts((prev) => prev.filter((product) => product.id !== id));
-    } catch (err) {
+  const deleteProductMutation = useMutation(deleteProduct, {
+    onSuccess: (_, id) => {
+      queryClient.setQueryData("products", (oldProducts) =>
+        oldProducts.filter((product) => product.id !== id)
+      );
+    },
+    onError: (err) => {
       console.error("상품 삭제 중 오류:", err);
-    }
+    },
+  });
+
+  const handleDeleteProduct = (id) => {
+    deleteProductMutation.mutate(id);
   };
 
   // 상품 수정하기
-  const handleUpdateProduct = async (id, updatedData) => {
-    try {
-      const updatedProduct = await updateProduct(id, updatedData);
-      setProducts((prev) =>
-        prev.map((product) => (product.id === id ? { ...product, ...updatedProduct } : product))
+  const updateProductMutation = useMutation(({ id, updatedData }) => updateProduct(id, updatedData), {
+    onSuccess: (updatedProduct, { id }) => {
+      queryClient.setQueryData("products", (oldProducts) =>
+        oldProducts.map((product) =>
+          product.id === id ? { ...product, ...updatedProduct } : product
+        )
       );
-    } catch (err) {
+    },
+    onError: (err) => {
       console.error("상품 수정 중 오류:", err);
-    }
+    },
+  });
+
+  const handleUpdateProduct = (id, updatedData) => {
+    updateProductMutation.mutate({ id, updatedData });
   };
 
   // 상품 상세 정보 가져오기
   const handleFetchProductDetails = async (id) => {
     try {
-      const productDetails = await fetchProductDetails(id);
-      return productDetails;
+      return await fetchProductDetails(id);
     } catch (err) {
       console.error("상품 상세 정보 가져오기 중 오류:", err);
     }
@@ -70,13 +69,22 @@ const useProductData = () => {
   const handleFetchProductsByCategory = async (categoryId) => {
     try {
       const data = await fetchProductsByCategory(categoryId);
-      setProducts(data);
+      queryClient.setQueryData("products", data);
     } catch (err) {
       console.error("카테고리별 상품 목록 가져오기 중 오류:", err);
     }
   };
-}
+
+  return {
+    products,
+    isLoading,
+    error,
+    handleAddProduct,
+    handleDeleteProduct,
+    handleUpdateProduct,
+    handleFetchProductDetails,
+    handleFetchProductsByCategory,
+  };
+};
 
 export default useProductData;
-
-  

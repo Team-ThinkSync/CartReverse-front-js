@@ -1,60 +1,63 @@
-import { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getReviews, createReview, deleteReview, updateReview } from "../api/reviewApi";
 
 // 리뷰 훅
 const useReview = (productId) => {
-  const [reviews, setReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const queryClient = useQueryClient();
 
   // 리뷰 목록 가져오기
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getReviews(productId);
-        setReviews(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const { data: reviews, isLoading, error } = useQuery(
+    ["reviews", productId],
+    () => getReviews(productId),
+    {
+      enabled: !!productId, // productId가 있을 때만 실행
+    }
+  );
 
-    fetchReviews();
-  }, [productId]);
+  // 리뷰 작성
+  const createReviewMutation = useMutation(
+    (reviewData) => createReview(productId, reviewData),
+    {
+      onSuccess: (newReview) => {
+        queryClient.setQueryData(["reviews", productId], (oldReviews) => [
+          ...(oldReviews || []),
+          newReview,
+        ]);
+      },
+    }
+  );
 
-    // 리뷰 작성
-    const handleCreateReview = async (reviewData) => {
-        try {
-            const newReview = await createReview(productId, reviewData);
-            setReviews((prev) => [...prev, newReview]);
-        } catch (err) {
-            console.error("리뷰 작성 중 오류 발생:", err);
-        }
-    };
+  // 리뷰 삭제
+  const deleteReviewMutation = useMutation((id) => deleteReview(id), {
+    onSuccess: (_, id) => {
+      queryClient.setQueryData(["reviews", productId], (oldReviews) =>
+        oldReviews.filter((review) => review.id !== id)
+      );
+    },
+  });
 
-    // 리뷰 삭제
-    const handleDeleteReview = async (id) => {
-        try {
-            await deleteReview(id);
-            setReviews((prev) => prev.filter((review) => review.id !== id));
-        } catch (err) {
-            console.error("리뷰 삭제 중 오류 발생:", err);
-        }
-    };
+  // 리뷰 수정
+  const updateReviewMutation = useMutation(
+    ({ id, updatedData }) => updateReview(id, updatedData),
+    {
+      onSuccess: (updatedReview, { id }) => {
+        queryClient.setQueryData(["reviews", productId], (oldReviews) =>
+          oldReviews.map((review) =>
+            review.id === id ? { ...review, ...updatedReview } : review
+          )
+        );
+      },
+    }
+  );
 
-    // 리뷰 수정
-    const handleUpdateReview = async (id, updatedData) => {
-        try {
-            const updatedReview = await updateReview(id, updatedData);
-            setReviews((prev) =>
-                prev.map((review) => (review.id === id ? { ...review, ...updatedReview } : review))
-            );
-        } catch (err) {
-            console.error("리뷰 수정 중 오류 발생:", err);
-        }
-    };
-}
+  return {
+    reviews,
+    isLoading,
+    error,
+    createReview: createReviewMutation.mutate,
+    deleteReview: deleteReviewMutation.mutate,
+    updateReview: updateReviewMutation.mutate,
+  };
+};
 
 export default useReview;

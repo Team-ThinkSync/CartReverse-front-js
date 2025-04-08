@@ -1,62 +1,69 @@
-import { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { fetchCategories, addCategory, deleteCategory, updateCategory } from '../api/categoryApi';
 
 // 카테고리 훅
 const useCategory = () => {
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const queryClient = useQueryClient();
 
   // 카테고리 데이터 가져오기
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const data = await fetchCategories();
-        setCategories(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { data: categories, isLoading, error } = useQuery("categories", fetchCategories);
 
   // 카테고리 추가
-  const handleAddCategory = async (categoryData) => {
-    try {
-      const newCategory = await addCategory(categoryData);
-      setCategories((prev) => [...prev, newCategory]);
-    } catch (err) {
+  const addCategoryMutation = useMutation(addCategory, {
+    onSuccess: (newCategory) => {
+      queryClient.setQueryData("categories", (old) => [...old, newCategory]);
+    },
+    onError: (err) => {
       console.error("카테고리 추가 중 오류 발생:", err);
-    }
+    },
+  });
+
+  const handleAddCategory = (categoryData) => {
+    addCategoryMutation.mutate(categoryData);
   };
 
   // 카테고리 삭제
-  const handleDeleteCategory = async (id) => {
-    try {
-      await deleteCategory(id);
-      setCategories((prev) => prev.filter((category) => category.id !== id));
-    } catch (err) {
+  const deleteCategoryMutation = useMutation(deleteCategory, {
+    onSuccess: (_, id) => {
+      queryClient.setQueryData("categories", (old) =>
+        old.filter((category) => category.id !== id)
+      );
+    },
+    onError: (err) => {
       console.error("카테고리 삭제 중 오류 발생:", err);
-    }
+    },
+  });
+
+  const handleDeleteCategory = (id) => {
+    deleteCategoryMutation.mutate(id);
   };
 
-    // 카테고리 수정    
-    const handleUpdateCategory = async (id, updatedData) => {   
-        try {
-            const updatedCategory = await updateCategory(id, updatedData);
-            setCategories((prev) =>
-                prev.map((category) =>
-                    category.id === id ? { ...category, ...updatedCategory } : category
-                )
-            );
-        } catch (err) {
-            console.error("카테고리 수정 중 오류 발생:", err);
-        }
-    };
-}
+  // 카테고리 수정
+  const updateCategoryMutation = useMutation(updateCategory, {
+    onSuccess: (updatedCategory) => {
+      queryClient.setQueryData("categories", (old) =>
+        old.map((category) =>
+          category.id === updatedCategory.id ? { ...category, ...updatedCategory } : category
+        )
+      );
+    },
+    onError: (err) => {
+      console.error("카테고리 수정 중 오류 발생:", err);
+    },
+  });
+
+  const handleUpdateCategory = (id, updatedData) => {
+    updateCategoryMutation.mutate({ id, ...updatedData });
+  };
+
+  return {
+    categories,
+    isLoading,
+    error,
+    handleAddCategory,
+    handleDeleteCategory,
+    handleUpdateCategory,
+  };
+};
 
 export default useCategory;
