@@ -10,7 +10,7 @@ const useReview = (productId) => {
     ["reviews", productId],
     () => getReviews(productId),
     {
-      enabled: !!productId, // productId가 있을 때만 실행
+      enabled: !!productId, 
     }
   );
 
