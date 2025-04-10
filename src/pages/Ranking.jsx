@@ -4,25 +4,15 @@ import { Button } from "../components/Button";
 import Clothes from "../assets/images/clothes.png";
 import { TrophyIcon } from "lucide-react";
 import Header from "../components/Header";
+import useProductData from "../hooks/useProductData";
 import Footer from "../components/Footer";
+import { useProductUIStore } from "../store/useProductStore";
 
-const categories = ["전체", "신발", "아우터", "상의", "바지"];
-
-const dummyItems = [
-  { id: 1, image: Clothes, title: "프리미엄 런닝화", category: "신발", rank: 1, price: "89,000원" },
-  { id: 2, image: Clothes, title: "오버사이즈 패딩", category: "아우터", rank: 2, price: "129,000원" },
-  { id: 3, image: Clothes, title: "캐시미어 니트", category: "상의", rank: 3, price: "79,000원" },
-  { id: 4, image: Clothes, title: "와이드 슬랙스", category: "바지", rank: 4, price: "69,000원" },
-  { id: 5, image: Clothes, title: "트레이닝 슈즈", category: "신발", rank: 5, price: "79,000원" },
-  { id: 6, image: Clothes, title: "데님 자켓", category: "아우터", rank: 6, price: "99,000원" },
-  { id: 7, image: Clothes, title: "베이직 티셔츠", category: "상의", rank: 7, price: "29,000원" },
-  { id: 8, image: Clothes, title: "조거 팬츠", category: "바지", rank: 8, price: "59,000원" },
-];
 
 export default function RankingPage() {
-  const [category, setCategory] = useState("전체");
-  
-  const filteredItems = dummyItems
+  const handleFetchProductsByCategory = useProductData();
+  const [ setCategory, selectedColor ] = useProductUIStore();
+  const filteredItems = handleFetchProductsByCategory.
     .filter((item) => category === "전체" || item.category === category)
     .sort((a, b) => a.rank - b.rank);
     

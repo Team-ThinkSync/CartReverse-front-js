@@ -5,45 +5,49 @@ import { Button } from "../components/Button";
 import Clothes from "../assets/images/clothes.png";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-
-const productData = {
-  id: 1,
-  brand: "나이키",
-  title: "에센셜 오버사이즈 후드 집업",
-  originalPrice: "89,000원",
-  price: "58,740원",
-  discount: "34%",
-  rating: 4.8,
-  reviewCount: 1024,
-  description: "클래식한 디자인의 후드 집업으로, 오버사이즈 핏과 부드러운 소재로 편안한 착용감을 제공합니다.",
-  images: [Clothes, Clothes, Clothes, Clothes],
-  isNew: true,
-  isSoldOut: false,
-  options: {
-    colors: ["블랙", "화이트", "그레이", "네이비"],
-    sizes: ["XS", "S", "M", "L", "XL", "XXL"]
-  },
-  details: [
-    { label: "소재", value: "면 80%, 폴리에스터 20%" },
-    { label: "제조국", value: "베트남" },
-    { label: "세탁방법", value: "단독 세탁, 뒤집어서 찬물에 세탁" },
-    { label: "모델정보", value: "184cm, 70kg / L 사이즈 착용" }
-  ]
-};
+import useProductData from "../hooks/useProductData";
+import useReview from "../hooks/useReview";
+import { useProductUIStore } from '../store/useProductStore';
 
 export default function ProductDetail() {
   const navigate = useNavigate();
-  const [selectedColor, setSelectedColor] = useState(productData.options.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [quantity, setQuantity] = useState(1);
-  const [showSizeGuide, setShowSizeGuide] = useState(false);
-  const [mainImage, setMainImage] = useState(productData.images[0]);
+  const  {
+    selectedColor, selectedSize,
+    quantity, showSizeGuide,
+    mainImage, setColor, setSize,
+    changeQuantity, toggleSizeGuide, setMainImage,
+    resetUI
+  } = useProductUIStore();
+  // 상품 데이터임
+  const [ 
+    handleAddProduct, 
+    handleDeleteProduct, 
+    handleUpdateProduct,
+    handleFetchProductDetails,
+    handleFetchProductsByCategory, 
+  ] = useProductData();
+
+  // {
+  //   "productName": "string",
+  //   "productImages": [
+  //     "string"
+  //   ],
+  //   "productPrice": 0,
+  //   "productStock": 0,
+  //   "categoryType": "string",
+  //   "categoryName": "string",
+  //   "likeCount": 0
+  // }
+
+  // 리뷰 데이터임
+  const reviews = useReview();
+  const { id } = useParams();
   
   // 수량 변경 함수
   const handleQuantityChange = (amount) => {
     const newQuantity = quantity + amount;
     if (newQuantity >= 1 && newQuantity <= 10) {
-      setQuantity(newQuantity);
+        changeQuantity(newQuantity);
     }
   };
   
@@ -56,12 +60,12 @@ export default function ProductDetail() {
         <div className="md:w-1/2">
           {/* 메인 이미지 */}
           <div className="mb-3">
-            <img src={mainImage} alt={productData.title} className="w-full h-96 object-cover" />
+            <img src={mainImage} alt={handleFetchProductDetails.productName} className="w-full h-96 object-cover" />
           </div>
           
           {/* 썸네일 이미지 */}
           <div className="flex gap-2">
-            {productData.images.map((img, index) => (
+            {handleFetchProductDetails.images.map((img, index) => (
               <div 
                 key={index} 
                 className={`w-20 h-20 cursor-pointer ${mainImage === img ? 'border-2 border-black' : 'border border-gray-200'}`}
@@ -76,10 +80,10 @@ export default function ProductDetail() {
         {/* 상품 정보 */}
         <div className="md:w-1/2">
           <div className="mb-1">
-            <span className="text-sm text-gray-500">{productData.brand}</span>
+            <span className="text-sm text-gray-500">{handleFetchProductDetails.categoryName}</span>
           </div>
           
-          <h1 className="text-xl font-bold mb-2">{productData.title}</h1>
+          <h1 className="text-xl font-bold mb-2">{handleFetchProductDetails.title}</h1>
           
           <div className="flex items-center mb-3">
             <div className="flex items-center mr-2">
@@ -87,24 +91,23 @@ export default function ProductDetail() {
                 <Star 
                   key={star} 
                   size={16} 
-                  fill={star <= Math.floor(productData.rating) ? "#000" : "none"} 
+                  fill={star <= Math.floor(reviews.content.rate) ? "#000" : "none"} 
                   color="#000" 
                 />
               ))}
-              <span className="ml-1 text-sm">{productData.rating}</span>
+              <span className="ml-1 text-sm">{reviews.rating}</span>
             </div>
-            <span className="text-sm text-gray-500">리뷰 {productData.reviewCount}</span>
+            <span className="text-sm text-gray-500">리뷰 {reviews.reviewCount}</span>
           </div>
           
           <div className="mb-5">
             <div className="flex items-center">
-              <span className="text-red-600 font-medium mr-2">{productData.discount}</span>
-              <span className="text-xl font-bold">{productData.price}</span>
+              <span className="text-xl font-bold">{handleFetchProductDetails.data.price}</span>
             </div>
-            <p className="text-sm text-gray-400 line-through">{productData.originalPrice}</p>
+            <p className="text-sm text-gray-400 line-through">{handleFetchProductDetails.data.originalPrice}</p>
           </div>
           
-          <p className="text-sm text-gray-600 mb-5">{productData.description}</p>
+          <p className="text-sm text-gray-600 mb-5">{handleFetchProductDetails.data.description}</p>
           
           {/* 색상 선택 */}
           <div className="mb-4">
@@ -113,39 +116,27 @@ export default function ProductDetail() {
               <span className="text-sm text-gray-500">{selectedColor}</span>
             </div>
             <div className="flex flex-wrap gap-2">
-              {productData.options.colors.map((color) => (
+              {handleFetchProductDetails.options.colors.map((color) => (
                 <button
                   key={color}
                   className={`px-3 py-2 text-sm border ${selectedColor === color ? 'border-black' : 'border-gray-200'}`}
-                  onClick={() => setSelectedColor(color)}
+                  onClick={() => setColor(color)}
                 >
                   {color}
                 </button>
               ))}
             </div>
           </div>
-          
-          {/* 사이즈 선택 */}
+
           <div className="mb-6">
             <div className="flex justify-between mb-2">
               <span className="text-sm font-medium">사이즈</span>
               <button 
                 className="text-sm text-gray-500 underline"
-                onClick={() => setShowSizeGuide(!showSizeGuide)}
+                onClick={() => toggleSizeGuide(!showSizeGuide)}
               >
                 사이즈 가이드
               </button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {productData.options.sizes.map((size) => (
-                <button
-                  key={size}
-                  className={`px-3 py-2 text-sm border ${selectedSize === size ? 'border-black bg-black text-white' : 'border-gray-200'}`}
-                  onClick={() => setSelectedSize(size)}
-                >
-                  {size}
-                </button>
-              ))}
             </div>
           </div>
           
@@ -209,26 +200,14 @@ export default function ProductDetail() {
       <div className="mt-12 border-t border-gray-200">
         <div className="flex border-b border-gray-200">
           <button className="py-3 px-4 font-medium border-b-2 border-black">상품 정보</button>
-          <button className="py-3 px-4 text-gray-500">리뷰 ({productData.reviewCount})</button>
+          <button className="py-3 px-4 text-gray-500">리뷰 ({reviews.data.size})</button>
           <button className="py-3 px-4 text-gray-500">Q&A</button>
         </div>
         
         <div className="py-8">
           <h3 className="text-lg font-bold mb-4">상품 상세 정보</h3>
           
-          <table className="w-full border-t border-gray-200">
-            <tbody>
-              {productData.details.map((detail, index) => (
-                <tr key={index} className="border-b border-gray-200">
-                  <td className="py-3 px-4 text-sm bg-gray-50 font-medium w-1/4">{detail.label}</td>
-                  <td className="py-3 px-4 text-sm">{detail.value}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          
           <div className="mt-8">
-            {/* 여기에 상세 이미지 콘텐츠가 들어갑니다 */}
             <img src={Clothes} alt="상세 이미지" className="w-full" />
             <img src={Clothes} alt="상세 이미지" className="w-full mt-4" />
           </div>
