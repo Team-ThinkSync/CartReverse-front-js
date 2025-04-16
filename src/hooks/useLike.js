@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { addLike } from '../api/LikeApi';
 
 // 좋아요 훅 (리액트 쿼리 사용)

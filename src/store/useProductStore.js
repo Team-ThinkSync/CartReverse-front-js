@@ -1,22 +1,7 @@
-// src/stores/useProductUIStore.ts
+// src/stores/useProductUIStore.js
 import { create } from 'zustand';
 
-interface ProductUIStore {
-  selectedColor: string;
-  selectedSize: string | null;
-  quantity: number;
-  showSizeGuide: boolean;
-  mainImage: string;
-
-  setColor: (color: string) => void;
-  setSize: (size: string) => void;
-  changeQuantity: (amount: number) => void;
-  toggleSizeGuide: () => void;
-  setMainImage: (img: string) => void;
-  resetUI: () => void;
-}
-
-export const useProductUIStore = create<ProductUIStore>((set) => ({
+export const useProductUIStore = create((set) => ({
   selectedColor: '',
   selectedSize: null,
   quantity: 1,
