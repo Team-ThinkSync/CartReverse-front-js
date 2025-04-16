@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchCategories, addCategory, deleteCategory, updateCategory } from '../api/categoryApi';
 
 // 카테고리 훅

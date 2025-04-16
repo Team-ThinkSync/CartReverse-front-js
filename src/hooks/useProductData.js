@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchProducts, createProduct, fetchProductDetails, deleteProduct, updateProduct, fetchProductsByCategory } from "../api/productApi";
 
 // 상품 목록 훅
