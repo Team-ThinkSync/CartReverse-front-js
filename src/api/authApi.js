@@ -65,17 +65,16 @@ export const changePassword = async (userData) => {
   }
 };
 
-// 카카오 로그인
+// 카카오 회원가입
 export const kakaoLogin = async (code) => {
   try {
-    // 서버로 리다이렉트 요청
-    window.location.href = `${BASE_URL}/users/kakao/callback?code=${code}`;
+    const response = await axios.get(`${BASE_URL}/users/kakao/callback?code=${code}`);
+    return response.data;
   } catch (error) {
     console.error("카카오 로그인 오류:", error);
     throw error;
   }
 };
-
 
 // 카카오 회원가입
 export const kakaoSignup = async (userData) => {
