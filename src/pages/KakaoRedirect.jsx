@@ -16,6 +16,7 @@ const KakaoRedirect = () => {
       .then((res) => {
         console.log("카카오 로그인 성공", res);
         localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
         sessionStorage.setItem("kakaoCodeHandled", code); // 재요청 방지
         navigate("/");
       })
@@ -23,7 +24,7 @@ const KakaoRedirect = () => {
         console.error("카카오 로그인 실패", err);
         navigate("/login");
       });
-  }, [code]);
+  }, []);
 
   return <p>로그인 중...</p>;
 };
