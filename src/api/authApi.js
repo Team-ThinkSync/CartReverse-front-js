@@ -65,6 +65,19 @@ export const changePassword = async (userData) => {
   }
 };
 
+export const completeKakaoSignup = (accessToken) => {
+  return fetch("/api/users/kakao/signup", {
+    method: "POST",
+    headers: {
+      Authorization: accessToken,
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
+    if (!res.ok) throw new Error("회원가입 최종 처리 실패");
+    return res.json();
+  });
+};
+
 // 카카오 회원가입
 export const kakaoLogin = async (code) => {
   try {

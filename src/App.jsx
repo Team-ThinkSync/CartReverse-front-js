@@ -18,6 +18,7 @@ import ProductDetail from "./pages/ProductDetail";
 import SocialDetail from "./pages/SocialDetail";
 import KakaoRedirect from "./pages/KakaoRedirect";
 import Admin from "./pages/Admin";
+import KakaoSignup from "./pages/KakaoSignUp";
 import AdminInquiry from "./components/admin/AdminInquiry";
 import UserManagement from "./components/admin/UserManagement";
 import ProductManagement from "./components/admin/ProductManagement";
@@ -40,11 +41,12 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/asks" element={<Asks />} />
+        <Route path="/kakao-signup" element={<KakaoSignup />} />
         <Route path="/bestProducts" element={<BestProducts />} />
         <Route path="/ranking" element={<RankingPage />} />
         <Route path="/fashionFeed" element={<FashionFeed/>}/>
         <Route path="/asks/write" element={<AsksWrite />} />
-        <Route path="/kakao" element={<KakaoRedirect />} />
+        <Route path="/oauth/kakao" element={<KakaoRedirect />} />
         <Route path="/social/detail" element={<SocialDetail/>}/>
 
       {/* 관리자 페이지 */}

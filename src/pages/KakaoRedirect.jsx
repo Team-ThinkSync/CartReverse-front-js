@@ -8,14 +8,20 @@ const KakaoRedirect = () => {
   const code = searchParams.get("code");
 
   useEffect(() => {
-    if (!code) return;
+    if (!code) {
+      console.error("Authorization code is missing from the URL.");
+      navigate("/login");
+      return;
+    }
+
     const isHandled = sessionStorage.getItem("kakaoCodeHandled");
     if (isHandled === code) return;
 
     kakaoLogin(code)
       .then((res) => {
         console.log("카카오 로그인 성공", res);
-        localStorage.setItem("accessToken", res.accessToken);
+        console.log("accessToken", res.accessToken);
+        console.log("refreshToken", res.refreshToken);
         sessionStorage.setItem("kakaoCodeHandled", code); // 재요청 방지
         navigate("/");
       })
@@ -24,6 +30,10 @@ const KakaoRedirect = () => {
         navigate("/login");
       });
   }, [code, navigate]);
+
+  if (!code) {
+    return null;
+  }
 
   return <p>로그인 중...</p>;
 };
