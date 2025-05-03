@@ -5,23 +5,26 @@ import { kakaoLogin } from "../api/authApi"; // API 함수 import
 const KakaoRedirect = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const code = searchParams.get("code");
 
   useEffect(() => {
-    const code = searchParams.get("code");
-    if (code) {
-      // 백엔드로 인가 코드 전달
-      kakaoLogin(code)
-        .then((res) => {
-          console.log("카카오 로그인 성공", res);
-          localStorage.setItem("accessToken", res.accessToken);
-          navigate("/"); // 홈으로 이동
-        })
-        .catch((err) => {
-          console.error("카카오 로그인 실패", err);
-          navigate("/login");
-        });
-    }
-  }, [searchParams]);
+    if (!code) return;
+    const isHandled = sessionStorage.getItem("kakaoCodeHandled");
+    if (isHandled === code) return;
+
+    kakaoLogin(code)
+      .then((res) => {
+        console.log("카카오 로그인 성공", res);
+        localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
+        sessionStorage.setItem("kakaoCodeHandled", code); // 재요청 방지
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error("카카오 로그인 실패", err);
+        navigate("/login");
+      });
+  }, []);
 
   return <p>로그인 중...</p>;
 };
