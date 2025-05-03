@@ -14,6 +14,7 @@ function RegisterForm() {
   });
   const { register, isLoading, error } = useRegisterUser();
 
+  const registerMutation = useRegisterUser();
 
   // 모두 동의 체크박스 클릭 시 실행되는 함수
   const handleAllCheck = () => {
@@ -100,7 +101,7 @@ function RegisterForm() {
     console.log("전송할 userData:", userData);
 
     try {
-      const res = await register(userData);
+      const res = await registerMutation.mutateAsync(userData);
       console.log(res.code);
       if (res.code === 200) {
         alert("회원가입이 완료되었습니다!");
