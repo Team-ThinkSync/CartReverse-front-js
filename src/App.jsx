@@ -46,7 +46,7 @@ function App() {
         <Route path="/ranking" element={<RankingPage />} />
         <Route path="/fashionFeed" element={<FashionFeed/>}/>
         <Route path="/asks/write" element={<AsksWrite />} />
-        <Route path="/oauth/kakao" element={<KakaoRedirect />} />
+        <Route path="/kakao" element={<KakaoRedirect />} />
         <Route path="/social/detail" element={<SocialDetail/>}/>
 
       {/* 관리자 페이지 */}

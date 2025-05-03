@@ -13,16 +13,19 @@ const KakaoRedirect = () => {
       navigate("/login");
       return;
     }
-
+  
     const isHandled = sessionStorage.getItem("kakaoCodeHandled");
     if (isHandled === code) return;
-
+  
     kakaoLogin(code)
       .then((res) => {
         console.log("카카오 로그인 성공", res);
-        console.log("accessToken", res.accessToken);
+
+        console.log("accessToken", res.accessToken); 
         console.log("refreshToken", res.refreshToken);
-        sessionStorage.setItem("kakaoCodeHandled", code); // 재요청 방지
+        localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
+        sessionStorage.setItem("kakaoCodeHandled", code);
         navigate("/");
       })
       .catch((err) => {
@@ -30,6 +33,7 @@ const KakaoRedirect = () => {
         navigate("/login");
       });
   }, [code, navigate]);
+  
 
   if (!code) {
     return null;
