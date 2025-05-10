@@ -9,41 +9,56 @@ import {
 } from "../api/asksApi";
 
 export const useGetInquiry = (id) => {
-  return useQuery(["inquiry", id], () => getInquiry(id), {
+  return useQuery({
+    queryKey: ["inquiry", id],
+    queryFn: () => getInquiry(id),
     enabled: !!id,
   });
 };
 
 export const useCreateInquiry = () => {
   const queryClient = useQueryClient();
-  return useMutation(createInquiry, {
-    onSuccess: () => queryClient.invalidateQueries(["inquiries"]),
+  return useMutation({
+    mutationFn: createInquiry,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["inquiries"] });
+    },
   });
 };
 
 export const useDeleteInquiry = () => {
   const queryClient = useQueryClient();
-  return useMutation(deleteInquiry, {
-    onSuccess: () => queryClient.invalidateQueries(["inquiries"]),
+  return useMutation({
+    mutationFn: deleteInquiry,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["inquiries"] });
+    },
   });
 };
 
 export const useUpdateInquiry = () => {
   const queryClient = useQueryClient();
-  return useMutation(({ id, inquiryData }) => updateInquiry(id, inquiryData), {
-    onSuccess: () => queryClient.invalidateQueries(["inquiries"]),
+  return useMutation({
+    mutationFn: ({ id, inquiryData }) => updateInquiry(id, inquiryData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["inquiries"] });
+    },
   });
 };
 
 export const useResInquiries = () => {
   const queryClient = useQueryClient();
-  return useMutation(ResInquiries, {
-    onSuccess: () => queryClient.invalidateQueries(["inquiries"]),
+  return useMutation({
+    mutationFn: ResInquiries,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["inquiries"] });
+    },
   });
 };
 
 export const useUserInquiries = (userId) => {
-  return useQuery(["userInquiries", userId], () => getUserInquiries(userId));
+  return useQuery({
+    queryKey: ["userInquiries", userId],
+    queryFn: () => getUserInquiries(userId),
+  });
 };
-
-

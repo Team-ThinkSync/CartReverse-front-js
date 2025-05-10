@@ -1,13 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { requestPayment, approvePayment, cancelPayment, getPaymentHistory } from '../api/paymentApi';
+import {
+  requestPayment,
+  approvePayment,
+  cancelPayment,
+  getPaymentHistory,
+} from '../api/paymentApi';
 
 const usePayment = () => {
   const queryClient = useQueryClient();
 
   // 결제 요청
-  const requestPaymentMutation = useMutation(requestPayment, {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries('paymentHistory');
+  const requestPaymentMutation = useMutation({
+    mutationFn: requestPayment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['paymentHistory'] });
     },
     onError: (error) => {
       console.error(error);
@@ -15,9 +21,10 @@ const usePayment = () => {
   });
 
   // 결제 승인
-  const approvePaymentMutation = useMutation(approvePayment, {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries('paymentHistory');
+  const approvePaymentMutation = useMutation({
+    mutationFn: approvePayment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['paymentHistory'] });
     },
     onError: (error) => {
       console.error(error);
@@ -25,9 +32,10 @@ const usePayment = () => {
   });
 
   // 결제 취소
-  const cancelPaymentMutation = useMutation(cancelPayment, {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries('paymentHistory');
+  const cancelPaymentMutation = useMutation({
+    mutationFn: cancelPayment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['paymentHistory'] });
     },
     onError: (error) => {
       console.error(error);
@@ -35,13 +43,15 @@ const usePayment = () => {
   });
 
   // 결제 내역 조회
-  const usePaymentHistory = (userId) => {
-    return useQuery(['paymentHistory', userId], () => getPaymentHistory(userId), {
+  const usePaymentHistory = (userId) =>
+    useQuery({
+      queryKey: ['paymentHistory', userId],
+      queryFn: () => getPaymentHistory(userId),
+      enabled: !!userId,
       onError: (error) => {
         console.error(error);
       },
     });
-  };
 
   return {
     requestPaymentMutation,

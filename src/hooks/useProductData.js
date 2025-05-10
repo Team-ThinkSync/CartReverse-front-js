@@ -1,17 +1,28 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchProducts, createProduct, fetchProductDetails, deleteProduct, updateProduct, fetchProductsByCategory } from "../api/productApi";
+import {
+  fetchProducts,
+  createProduct,
+  fetchProductDetails,
+  deleteProduct,
+  updateProduct,
+  fetchProductsByCategory,
+} from "../api/productApi";
 
 // 상품 목록 훅
 const useProductData = () => {
   const queryClient = useQueryClient();
 
   // 상품 목록 가져오기
-  const { data: products, isLoading, error } = useQuery("products", fetchProducts);
+  const { data: products, isLoading, error } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
 
-  // 상품 추가하기
-  const addProductMutation = useMutation(createProduct, {
+  // 상품 추가
+  const addProductMutation = useMutation({
+    mutationFn: createProduct,
     onSuccess: (newProduct) => {
-      queryClient.setQueryData("products", (oldProducts) => [...oldProducts, newProduct]);
+      queryClient.setQueryData(["products"], (old = []) => [...old, newProduct]);
     },
     onError: (err) => {
       console.error("상품 추가 중 오류:", err);
@@ -22,11 +33,12 @@ const useProductData = () => {
     addProductMutation.mutate(productData);
   };
 
-  // 상품 삭제하기
-  const deleteProductMutation = useMutation(deleteProduct, {
+  // 상품 삭제
+  const deleteProductMutation = useMutation({
+    mutationFn: deleteProduct,
     onSuccess: (_, id) => {
-      queryClient.setQueryData("products", (oldProducts) =>
-        oldProducts.filter((product) => product.id !== id)
+      queryClient.setQueryData(["products"], (old = []) =>
+        old.filter((product) => product.id !== id)
       );
     },
     onError: (err) => {
@@ -38,11 +50,12 @@ const useProductData = () => {
     deleteProductMutation.mutate(id);
   };
 
-  // 상품 수정하기
-  const updateProductMutation = useMutation(({ id, updatedData }) => updateProduct(id, updatedData), {
+  // 상품 수정
+  const updateProductMutation = useMutation({
+    mutationFn: ({ id, updatedData }) => updateProduct(id, updatedData),
     onSuccess: (updatedProduct, { id }) => {
-      queryClient.setQueryData("products", (oldProducts) =>
-        oldProducts.map((product) =>
+      queryClient.setQueryData(["products"], (old = []) =>
+        old.map((product) =>
           product.id === id ? { ...product, ...updatedProduct } : product
         )
       );
@@ -56,7 +69,7 @@ const useProductData = () => {
     updateProductMutation.mutate({ id, updatedData });
   };
 
-  // 상품 상세 정보 가져오기
+  // 상품 상세
   const handleFetchProductDetails = async (id) => {
     try {
       return await fetchProductDetails(id);
@@ -65,11 +78,11 @@ const useProductData = () => {
     }
   };
 
-  // 카테고리별 상품 목록 가져오기
+  // 카테고리별 상품
   const handleFetchProductsByCategory = async (categoryId) => {
     try {
       const data = await fetchProductsByCategory(categoryId);
-      queryClient.setQueryData("products", data);
+      queryClient.setQueryData(["products"], data);
     } catch (err) {
       console.error("카테고리별 상품 목록 가져오기 중 오류:", err);
     }

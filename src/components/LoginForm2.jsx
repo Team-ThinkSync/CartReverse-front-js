@@ -16,7 +16,7 @@ function LoginForm2() {
     const [notAllow, setNotAllow] = useState(true);
     const navigate = useNavigate();
     const {login, isLoggedIn} = useAuthStore();
-    const { login: loginAPI } = useLoginUser();     
+    const { mutateAsync: loginAPI } = useLoginUser();     
 
     // 이메일 입력 핸들러
     const handleEmail = (e) => {

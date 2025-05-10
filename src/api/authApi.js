@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "./BaseApi";
+import { useState } from "react";
 
 const KAKAO_CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
 const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
@@ -66,7 +67,7 @@ export const changePassword = async (userData) => {
 };
 
 export const completeKakaoSignup = (accessToken) => {
-  return fetch("/api/users/kakao/signup", {
+  return fetch("users/signup", {
     method: "POST",
     headers: {
       Authorization: accessToken,
